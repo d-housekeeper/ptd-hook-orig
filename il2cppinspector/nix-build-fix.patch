@@ -1,0 +1,41 @@
+diff --git a/Il2CppInspector.CLI/Il2CppInspector.CLI.csproj b/Il2CppInspector.CLI/Il2CppInspector.CLI.csproj
+index 2640e22..227ada0 100644
+--- a/Il2CppInspector.CLI/Il2CppInspector.CLI.csproj
++++ b/Il2CppInspector.CLI/Il2CppInspector.CLI.csproj
+@@ -4,10 +4,9 @@
+     <OutputType>Exe</OutputType>
+     <TargetFramework>netcoreapp3.1</TargetFramework>
+ 
+-    <PublishSingleFile>true</PublishSingleFile>
++    <PublishSingleFile>false</PublishSingleFile>
+     <!-- Plugins may require bass class library assemblies we're not using so disable trimming -->
+     <PublishTrimmed>false</PublishTrimmed>
+-    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+     <Version>2021.1</Version>
+     <Company>Noisy Cow Studios</Company>
+diff --git a/Il2CppInspector.sln b/Il2CppInspector.sln
+index d5bbdd4..536259c 100644
+--- a/Il2CppInspector.sln
++++ b/Il2CppInspector.sln
+@@ -12,11 +12,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Il2CppInspector.CLI", "Il2C
+ 		{E4721466-CC6F-47EB-AD48-F4DE70D77E5C} = {E4721466-CC6F-47EB-AD48-F4DE70D77E5C}
+ 	EndProjectSection
+ EndProject
+-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Il2CppTests", "Il2CppTests\Il2CppTests.csproj", "{389E4BDF-A749-4554-848B-32B3B6EE5684}"
+-	ProjectSection(ProjectDependencies) = postProject
+-		{E4721466-CC6F-47EB-AD48-F4DE70D77E5C} = {E4721466-CC6F-47EB-AD48-F4DE70D77E5C}
+-	EndProjectSection
+-EndProject
+ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{46226B08-22BA-455E-8B99-F496E90EDCBC}"
+ 	ProjectSection(SolutionItems) = preProject
+ 		.editorconfig = .editorconfig
+@@ -31,8 +26,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution
+ 		docs\VisualStudio_Preview.png = docs\VisualStudio_Preview.png
+ 	EndProjectSection
+ EndProject
+-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Il2CppInspector.GUI", "Il2CppInspector.GUI\Il2CppInspector.GUI.csproj", "{A24D77DA-8A64-4AD3-956A-677A96F20373}"
+-EndProject
+ Global
+ 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+ 		Debug|Any CPU = Debug|Any CPU

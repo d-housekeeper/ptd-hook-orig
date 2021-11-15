@@ -1,0 +1,7 @@
+/out
+*.apk
+/hook/appdata/*
+!/hook/appdata/il2cpp-functions.h
+!/hook/framework/helpers.h
+!/hook/framework/helpers.cpp
+!/hook/framework/il2cpp-init.cpp
