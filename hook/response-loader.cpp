@@ -33,7 +33,7 @@ static std::string loadResponsePmFromFile(const char *apiName) {
                         fileName.c_str());
   } else {
     __android_log_print(ANDROID_LOG_DEBUG, androidLogTag,
-                        "Loading1 response file from %s", fileName.c_str());
+                        "Loading response file from %s", fileName.c_str());
   }
   std::stringstream buffer;
   buffer << t.rdbuf();
