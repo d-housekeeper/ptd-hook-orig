@@ -7,7 +7,6 @@ if [ "$HASH_STATUS" = 1 ]; then
   exit 1
 fi
 
-set -eu
 rm -rf ./out/cpp
 Il2CppInspector -i PTD.apk --select-outputs --cpp-out ./out/cpp
 
