@@ -8,7 +8,7 @@
 using json = nlohmann::json;
 
 const char *dataPath = "/storage/emulated/0/Android/data/"
-                       "com.square_enix.android_googleplay.PTD/files";
+                       "com.square_enix.android_googleplay.PTD/files/Responses";
 const char *nativeTokenResponse = R"({"rp":{"nt":"none"}})";
 
 static std::string loadResponsePmFromFile(const char *apiName);

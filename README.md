@@ -58,7 +58,7 @@ After building, run `./install.sh` on host machine to install the mod to app's l
 Then send json files you want the hook library to use as replacement server responses. The mod can only read already decrypted, uncompressed response. You can use [ptd-tool](https://gitee.com/binaryeater/ptd-tool) if you have captured response before shutdown.
 
 ```
-adb push Login.json /storage/emulated/0/Android/data/com.square_enix.android_googleplay.PTD/files/
+adb push Login.json /storage/emulated/0/Android/data/com.square_enix.android_googleplay.PTD/files/Responses
 ```
 
 If the hook fails to find json file on internal storage, it prints logs to logcat. See logs with `adb logcat -s PTDHook` to see which API response is required.
