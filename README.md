@@ -49,7 +49,7 @@ The script does following:
 
 2. run `./build.sh`
 
-Runs cmake and make to build libhook.so and replacement lib__57d5__.so to disable anti cheat detection.
+Runs cmake and make to build libhook.so and replacement lib__57d5__.so to disable anti cheat.
 
 ## Installation
 
