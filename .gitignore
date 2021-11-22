@@ -5,3 +5,4 @@
 !/hook/framework/helpers.h
 !/hook/framework/helpers.cpp
 !/hook/framework/il2cpp-init.cpp
+*.keystore

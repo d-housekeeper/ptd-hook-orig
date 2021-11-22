@@ -21,7 +21,9 @@ pkgs.mkShell rec {
   buildInputs = [
     il2cppinspector
   ] ++ (with pkgs; [
-    unzip
+    adoptopenjdk-bin
+  ]) ++ (with unstablePkgs; [
+    apktool
   ]);
 
   shellHook = ''
