@@ -55,7 +55,7 @@ Runs cmake and make to build libhook.so and replacement lib__57d5__.so to disabl
 
 After building, run `./install.sh` on host machine to install the mod to app's library directory.
 
-Then send json files you want the hook library to use as replacement server responses. The mod can only read already decrypted, uncompressed response. You can use [ptd-response-decoder](https://gitee.com/binaryeater/ptd-response-decoder) if you have captured response before shutdown.
+Then send json files you want the hook library to use as replacement server responses. The mod can only read already decrypted, uncompressed response. You can use [ptd-tool](https://gitee.com/binaryeater/ptd-tool) if you have captured response before shutdown.
 
 ```
 adb push Login.json /storage/emulated/0/Android/data/com.square_enix.android_googleplay.PTD/files/
