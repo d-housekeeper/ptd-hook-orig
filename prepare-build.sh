@@ -17,3 +17,5 @@ rm -rf ./out/main
 mkdir -p ./out/main
 unzip -j PTD.apk lib/armeabi-v7a/libmain.so -d ./out/main/
 patchelf ./out/main/libmain.so --add-needed libhook.so
+
+apktool d -f ./PTD.apk -o ./out/apktool

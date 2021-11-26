@@ -4,9 +4,16 @@ let
     config = {
       android_sdk.accept_license = true;
     };
+    overlays = [
+      (self: super: {
+        buildGoApplication = super.callPackage "${sources.gomod2nix}/builder" { };
+        gomod2nix = super.callPackage sources.gomod2nix { };
+      })
+    ];
   };
   unstablePkgs = import sources.nixpkgs-unstable { };
   il2cppinspector = unstablePkgs.callPackage ./il2cppinspector/default.nix { };
+  ptd-tool = pkgs.callPackage ./ptd-tool/default.nix { };
   androidComposition = pkgs.androidenv.composeAndroidPackages {
     includeNDK = true;
     cmakeVersions = [ "3.18.1" ];
@@ -20,13 +27,16 @@ pkgs.mkShell rec {
 
   buildInputs = [
     il2cppinspector
+    ptd-tool
   ] ++ (with pkgs; [
     adoptopenjdk-bin
+    jq
   ]) ++ (with unstablePkgs; [
     apktool
   ]);
 
   shellHook = ''
     export PATH="$ANDROID_SDK_ROOT/cmake/${cmake.version}/bin:$ANDROID_SDK_ROOT/build-tools/${build-tools.version}/:$PATH"
+    export PTD_TOOL_DIR="${ptd-tool}"
   '';
 }
