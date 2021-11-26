@@ -40,12 +40,16 @@ On non-linux machines you could also use docker. It can also be used on linux, b
 docker run --rm -it -v ptd-hook-nix:/nix -v $PWD:/work -w /work nixos/nix nix-shell
 ```
 
-adb command will not be installed automatically. Run scripts that need adb on host machine.
+adb command will not be installed automatically. To run scripts that need adb to work, run them on host machine.
 (There are ways to run adb from virtual machine, though I do not go into detail here)
 
 ## Building
 
 1. Run `./prepare-build.sh`. You only need to run once.
+
+```
+./prepare-build.sh
+```
 
 The script does following:
 
@@ -55,11 +59,19 @@ The script does following:
 
 2. run `./build.sh`
 
+```
+./build.sh
+```
+
 Runs cmake and make to build libhook.so and replacement lib__57d5__.so to disable anti cheat.
 
 ## Installing with root permissions
 
 After building, run `./install-with-su.sh` on host machine to install the mod to app's library directory.
+
+```
+./install-with-su.sh
+```
 
 ## Installing with modded APK
 
@@ -104,7 +116,7 @@ Failed to load response file from /storage/emulated/0/Android/data/com.square_en
 
 ## Generating login responses
 
-nix-shell also setup tools for generating login responses.
+nix-shell also setup tools for generating login responses, which will allow you to run the app without responses captured by yourself.
 Running `./prepare-response-generator.sh` sets up decoded MD files and configuration file needed for running the tool.
 Replace `/path/to/md/` with actual path to MD directory on your machine.
 
@@ -122,4 +134,12 @@ To send generated responses to Android device, use `./install-responses.sh`.
 
 ```
 ./install-responses.sh
+```
+
+## Other helper scripts
+
+You can launch the app using adb with `./launch-activity.sh`.
+
+```
+./launch-activity.sh
 ```
