@@ -29,13 +29,14 @@ namespace app {
 #undef DO_TYPEDEF
 
 #include <android/log.h>
+#include "../utils.h"
 
 // IL2CPP application initializer
 void init_il2cpp()
 {
 	// Get base address of IL2CPP module
 	uintptr_t baseAddress = il2cppi_get_base_address();
-	__android_log_print(ANDROID_LOG_DEBUG, "Hook", "il2cppi_get_base_address: 0x%08x", baseAddress);
+	__android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "il2cppi_get_base_address: 0x%08x", baseAddress);
 
 	using namespace app;
 
