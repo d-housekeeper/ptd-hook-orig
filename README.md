@@ -109,7 +109,7 @@ adb push Login.json /storage/emulated/0/Android/data/com.square_enix.android_goo
 If the hook fails to find json file on internal storage, it prints logs to logcat. See logs with `adb logcat -s PTDHook` to see which API response is required.
 
 ```
-Failed to load response file from /storage/emulated/0/Android/data/com.square_enix.android_googleplay.PTD/files/EquipmentAvatar.json
+Failed to load response file from /storage/emulated/0/Android/data/com.square_enix.android_googleplay.PTD/files/Responses/EquipmentAvatar.json
 ```
 
 `GetNativeToken` is automatically replaced with one embedded in the injection library so you don't need to prepare one by yourself.
