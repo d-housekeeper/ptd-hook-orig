@@ -5,12 +5,12 @@
 , unzip }:
 buildGoApplication rec {
   pname = "ptd-tool";
-  version = "29098e8a8f22ea70c0b9f7d729daac351b3973e6";
+  version = "234c29c88260f5ac85c5f9d7310f8dc6ae7f88fc";
   buildInputs = [ jq ];
   nativeBuildInputs = [ unzip ];
   src = fetchurl {
     url = "https://gitee.com/binaryeater/ptd-tool/repository/archive/${version}.zip";
-    sha256 = "15cw36214zg510y9m8jmcd9d4g1w47q1khdgl46qbz9sj2il66lf";
+    sha256 = "1nfv9wqd1l41ji8h63iz9fd9f5sldp4kidpmjsqb5983r24z460a";
   };
   modules = ./gomod2nix.toml;
   postBuild = ''
