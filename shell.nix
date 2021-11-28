@@ -29,7 +29,7 @@ pkgs.mkShell rec {
     il2cppinspector
     ptd-tool
   ] ++ (with pkgs; [
-    adoptopenjdk-bin
+    jdk11_headless
     jq
   ]) ++ (with unstablePkgs; [
     apktool
