@@ -19,7 +19,7 @@ Changes to user data is lost after restart, because the mod does not do anything
 * Installs hooks to disable all requests with `UnityWebRequest` wrapper class used by the game, and replaces responses with ones stored in internal storage.
 * The mod supports 2 installation methods: install with modded apk, or direct install with root permissions.
 * Replaces connect system call with AF_INET or AF_INET6 to block all web requests from the app. This is technically not required when installing mod with apk modding method, as network permission on AndroidManifest.xml is removed after rebuilding apk. For installation with root permission, this is still required.
-* Disables anti cheat library embedded in the apk.
+* Disables anti cheat library embedded in the apk by replacing it with dummy one. This probably only works with this specific version of PTD, as the antiCheatValues changed between releases of the app. It will probably not work on other apps either. I will not write how I got those values, because that might make disabling cheat detection on other games easier. (Other games might be using more sophisticated cheat detection techniques and can't be disabled in the same way, I just don't know.)
 
 ## Prerequisites
 
