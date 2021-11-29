@@ -35,6 +35,7 @@ pkgs.mkShell rec {
     customJRE
   ] ++ (with pkgs; [
     jq
+    hashdeep
   ]) ++ (with unstablePkgs; [
     apktool
   ]);
