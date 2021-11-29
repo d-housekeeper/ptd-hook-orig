@@ -46,7 +46,6 @@ docker run --rm -it -v ptd-hook-nix:/nix -v $PWD:/work -w /work nixos/nix nix-sh
 
 adb command will not be installed automatically. To run scripts that need adb to work, run them on host machine.
 (There are ways to run adb from virtual machine, though I do not go into detail here)
-
 ## Building
 
 1. Run `./prepare-build.sh`. You only need to run once.
@@ -60,6 +59,16 @@ The script does following:
 * Creates C++ header with Il2CppInspector for shared library (.so file) injection. As I only put small subset of generated headers here to avoid copying copyrighted materials as much as possible, you need to generate most of them by yourself.
 * extracts libmain.so from apk, and runs patchelf to make it load injection library which we will build in next step. Required for installation with root permissions.
 * decompile the apk with apktool. Required for installation with modded apk.
+
+If you want to be sure that you are using right version of the apk as the base, run following right after running:
+
+```
+./check-input-apk.sh
+```
+
+This might not work correctly if you clone this repo in windows filesystem. Run git clone on linux filesystem to get correct results.
+This will also fail after running `./build-apk.sh` at least once, as the script changes contents on `./out/apktool/`
+
 
 2. run `./build.sh`
 

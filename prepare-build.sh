@@ -8,7 +8,6 @@ rm ./out/cpp/appdata/il2cpp-functions.h
 cp ./out/cpp/appdata/*.h ./hook/appdata/
 
 apktool d -f ./PTD.apk -o ./out/apktool
-hashdeep -l -r -a -k ./apktool-out-audit.txt ./out/apktool/
 
 rm -rf ./out/main
 mkdir -p ./out/main
