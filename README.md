@@ -34,6 +34,10 @@ You need a linux machine (either real machine or virtual machine) with nix insta
 
 Before running build scripts, get PTD's apk from your backup, and rename it to `PTD.apk`, and place it in the root directory of this repo. Then start a subshell with `nix-shell`.
 
+```
+nix-shell
+```
+
 On non-linux machines you could also use docker. It can also be used on linux, but all files created by scripts owned by root.
 
 ```
