@@ -20,6 +20,10 @@ let
   };
   build-tools = pkgs.lib.head androidComposition.build-tools;
   cmake = pkgs.lib.head androidComposition.cmake;
+  customJRE = with pkgs; jre_minimal.override {
+    modules = [ "java.logging" ];
+    jdk = jdk11_headless;
+  };
 in
 pkgs.mkShell rec {
   ANDROID_SDK_ROOT = "${androidComposition.androidsdk}/libexec/android-sdk";
@@ -28,8 +32,8 @@ pkgs.mkShell rec {
   buildInputs = [
     il2cppinspector
     ptd-tool
+    customJRE
   ] ++ (with pkgs; [
-    jdk11_headless
     jq
   ]) ++ (with unstablePkgs; [
     apktool
