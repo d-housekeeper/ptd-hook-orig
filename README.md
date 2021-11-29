@@ -119,6 +119,8 @@ You can then send responses to Android device like this.
 adb push Login.json /storage/emulated/0/Android/data/com.square_enix.android_googleplay.PTD/files/Responses/
 ```
 
+NOTE: This script and `./install-responses.sh` (which we will explain later) may fail on devices running Android 11+, as the OS no longer seem to allow pushing to this data directory directly with adb. Copying responses to a different directory and then moving them to the data directory might work, though I haven't tested that yet. On Android 10 and lower those script should work as expected.
+
 If the hook fails to find json file on internal storage, it prints logs to logcat. See logs with `adb logcat -s PTDHook` to see which API response is required.
 
 ```
