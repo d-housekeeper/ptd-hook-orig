@@ -76,15 +76,15 @@ void initApiMod() {
   gum_interceptor_replace(
       interceptor, GSIZE_TO_POINTER(EnvironmentData_set_IsGZipCompress),
       (void *)replacement_EnvironmentData_set_IsGZipCompress, nullptr);
-  gum_interceptor_replace(interceptor,
-                          GSIZE_TO_POINTER(UnityWebRequest_get_isDone),
-                          (void *)replacement_UnityWebRequest_get_isDone, nullptr);
+  gum_interceptor_replace(
+      interceptor, GSIZE_TO_POINTER(UnityWebRequest_get_isDone),
+      (void *)replacement_UnityWebRequest_get_isDone, nullptr);
   gum_interceptor_replace(
       interceptor, GSIZE_TO_POINTER(UnityWebRequest_SendWebRequest),
       (void *)replacement_UnityWebRequest_SendWebRequest, nullptr);
-  gum_interceptor_replace(interceptor,
-                          GSIZE_TO_POINTER(UnityWebRequest_get_error),
-                          (void *)replacement_UnityWebRequest_get_error, nullptr);
+  gum_interceptor_replace(
+      interceptor, GSIZE_TO_POINTER(UnityWebRequest_get_error),
+      (void *)replacement_UnityWebRequest_get_error, nullptr);
   gum_interceptor_replace(interceptor,
                           GSIZE_TO_POINTER(DownloadHandler_GetText),
                           (void *)replacement_DownloadHandler_GetText, nullptr);
