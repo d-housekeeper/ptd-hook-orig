@@ -5,3 +5,4 @@ DO_APP_FUNC(0x02657204, String *, DownloadHandler_GetText, (DownloadHandler * __
 DO_APP_FUNC(0x026589A4, String *, UnityWebRequest_get_error, (UnityWebRequest * __this, MethodInfo * method));
 DO_APP_FUNC(0x01825634, RequestBase_ResponseParameter *, RequestBase_DecodeResultData, (RequestBase * __this, String * receiveData, MethodInfo * method));
 DO_APP_FUNC(0x0181FC34, void, EnvironmentData_set_IsGZipCompress, (EnvironmentData * __this, bool value, MethodInfo * method));
+DO_APP_FUNC(0x0098CD24, bool, LocalData_get_DisuseGooglePlayService, (LocalData * __this, MethodInfo * method));

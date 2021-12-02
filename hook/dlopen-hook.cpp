@@ -1,4 +1,5 @@
 #include "api-mod.h"
+#include "local-data-mod.h"
 #include "frida-gum.h"
 #include "helpers.h"
 #include "il2cpp-init.h"
@@ -82,6 +83,7 @@ static void initAllHooks(DLOpenListener *self) {
                       "Initializing all hooks");
   init_il2cpp();
   initApiMod();
+  initLocalDataMod();
   self->allHooksLoaded = true;
 }
 

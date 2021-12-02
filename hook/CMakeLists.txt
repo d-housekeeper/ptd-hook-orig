@@ -11,6 +11,7 @@ add_library(hook
   framework/il2cpp-init.cpp
   response-loader.cpp
   disable-connect-hook.cpp
+  local-data-mod.cpp
   main.cpp)
 include_directories(frida-gum-devkit
   appdata
