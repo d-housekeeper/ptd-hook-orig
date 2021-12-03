@@ -2,7 +2,8 @@
 , fetchurl
 , jq
 , lib
-, unzip }:
+, unzip
+}:
 buildGoApplication rec {
   pname = "ptd-tool";
   version = "234c29c88260f5ac85c5f9d7310f8dc6ae7f88fc";

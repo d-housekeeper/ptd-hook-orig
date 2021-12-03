@@ -10,4 +10,4 @@
 // add headers that you want to pre-compile here
 #include "il2cpp-appdata.h"
 
-#endif //PCH_IL2CPP_H
+#endif // PCH_IL2CPP_H

@@ -7,61 +7,44 @@
 
 using namespace app;
 
-static bool
-replacement_EnvironmentData_get_CurrentIsAesEncrypt(EnvironmentData *__this,
-                                                    MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag,
-                      "EnvironmentData_get_CurrentIsAesEncrypt");
+static bool replacement_EnvironmentData_get_CurrentIsAesEncrypt(EnvironmentData *__this, MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "EnvironmentData_get_CurrentIsAesEncrypt");
   return false;
 }
 
-static void
-replacement_EnvironmentData_set_IsGZipCompress(EnvironmentData *__this,
-                                               bool value, MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag,
-                      "EnvironmentData_set_IsGZipCompress");
+static void replacement_EnvironmentData_set_IsGZipCompress(EnvironmentData *__this, bool value, MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "EnvironmentData_set_IsGZipCompress");
   __this->_IsGZipCompress_k__BackingField = false;
 }
 
-static bool replacement_UnityWebRequest_get_isDone(UnityWebRequest *__this,
-                                                   MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag,
-                      "replacement_UnityWebRequest_get_isDone");
+static bool replacement_UnityWebRequest_get_isDone(UnityWebRequest *__this, MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "replacement_UnityWebRequest_get_isDone");
   return true;
 }
 
-static UnityWebRequestAsyncOperation *
-replacement_UnityWebRequest_SendWebRequest(UnityWebRequest *__this,
-                                           MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag,
-                      "replacement_UnityWebRequest_SendWebRequest");
+static UnityWebRequestAsyncOperation *replacement_UnityWebRequest_SendWebRequest(UnityWebRequest *__this,
+                                                                                 MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "replacement_UnityWebRequest_SendWebRequest");
   return nullptr;
 }
 
-static String *replacement_DownloadHandler_GetText(DownloadHandler *__this,
-                                                   MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag,
-                      "replacement_DownloadHandler_GetText");
+static String *replacement_DownloadHandler_GetText(DownloadHandler *__this, MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "replacement_DownloadHandler_GetText");
   return (String *)il2cpp_string_new("a");
 }
 
-static String *replacement_UnityWebRequest_get_error(UnityWebRequest *__this,
-                                                     MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag,
-                      "UnityWebRequest_get_error");
+static String *replacement_UnityWebRequest_get_error(UnityWebRequest *__this, MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_get_error");
   return nullptr;
 }
 
-static RequestBase_ResponseParameter *replacement_RequestBase_DecodeResultData(
-    RequestBase *__this, String *receiveData, MethodInfo *method) {
+static RequestBase_ResponseParameter *replacement_RequestBase_DecodeResultData(RequestBase *__this, String *receiveData,
+                                                                               MethodInfo *method) {
   std::string apiName = il2cppi_to_string(__this->_ApiName_k__BackingField);
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag,
-                      "RequestBase_DecodeResultData: %s", apiName.c_str());
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "RequestBase_DecodeResultData: %s", apiName.c_str());
   std::string response = loadResponse(apiName.c_str());
-  String *replacementReceiveData =
-      (String *)il2cpp_string_new(response.c_str());
-  RequestBase_ResponseParameter *ret =
-      RequestBase_DecodeResultData(__this, replacementReceiveData, method);
+  String *replacementReceiveData = (String *)il2cpp_string_new(response.c_str());
+  RequestBase_ResponseParameter *ret = RequestBase_DecodeResultData(__this, replacementReceiveData, method);
 
   return ret;
 }
@@ -70,26 +53,19 @@ void initApiMod() {
   GumInterceptor *interceptor = gum_interceptor_obtain();
 
   gum_interceptor_begin_transaction(interceptor);
-  gum_interceptor_replace(
-      interceptor, GSIZE_TO_POINTER(EnvironmentData_get_CurrentIsAesEncrypt),
-      (void *)replacement_EnvironmentData_get_CurrentIsAesEncrypt, nullptr);
-  gum_interceptor_replace(
-      interceptor, GSIZE_TO_POINTER(EnvironmentData_set_IsGZipCompress),
-      (void *)replacement_EnvironmentData_set_IsGZipCompress, nullptr);
-  gum_interceptor_replace(
-      interceptor, GSIZE_TO_POINTER(UnityWebRequest_get_isDone),
-      (void *)replacement_UnityWebRequest_get_isDone, nullptr);
-  gum_interceptor_replace(
-      interceptor, GSIZE_TO_POINTER(UnityWebRequest_SendWebRequest),
-      (void *)replacement_UnityWebRequest_SendWebRequest, nullptr);
-  gum_interceptor_replace(
-      interceptor, GSIZE_TO_POINTER(UnityWebRequest_get_error),
-      (void *)replacement_UnityWebRequest_get_error, nullptr);
-  gum_interceptor_replace(interceptor,
-                          GSIZE_TO_POINTER(DownloadHandler_GetText),
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(EnvironmentData_get_CurrentIsAesEncrypt),
+                          (void *)replacement_EnvironmentData_get_CurrentIsAesEncrypt, nullptr);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(EnvironmentData_set_IsGZipCompress),
+                          (void *)replacement_EnvironmentData_set_IsGZipCompress, nullptr);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(UnityWebRequest_get_isDone),
+                          (void *)replacement_UnityWebRequest_get_isDone, nullptr);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(UnityWebRequest_SendWebRequest),
+                          (void *)replacement_UnityWebRequest_SendWebRequest, nullptr);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(UnityWebRequest_get_error),
+                          (void *)replacement_UnityWebRequest_get_error, nullptr);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(DownloadHandler_GetText),
                           (void *)replacement_DownloadHandler_GetText, nullptr);
-  gum_interceptor_replace(
-      interceptor, GSIZE_TO_POINTER(RequestBase_DecodeResultData),
-      (void *)replacement_RequestBase_DecodeResultData, nullptr);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(RequestBase_DecodeResultData),
+                          (void *)replacement_RequestBase_DecodeResultData, nullptr);
   gum_interceptor_end_transaction(interceptor);
 }
