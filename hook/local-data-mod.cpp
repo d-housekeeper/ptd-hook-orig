@@ -14,7 +14,7 @@ String *replacement_EnvironmentData_get_UUID(EnvironmentData *__this, MethodInfo
 bool replacement_LocalData_get_DisuseGooglePlayService(LocalData *__this, MethodInfo *method) {
   // Prevents google sign in dialog from showing up when you run the game for the first time after restoring save data
   // from backup
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "LocalData_get_DisuseGooglePlayService");
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "LocalData_get_DisuseGooglePlayService");
   return true;
 }
 

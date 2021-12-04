@@ -8,33 +8,33 @@
 using namespace app;
 
 static bool replacement_EnvironmentData_get_CurrentIsAesEncrypt(EnvironmentData *__this, MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "EnvironmentData_get_CurrentIsAesEncrypt");
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "EnvironmentData_get_CurrentIsAesEncrypt");
   return false;
 }
 
 static void replacement_EnvironmentData_set_IsGZipCompress(EnvironmentData *__this, bool value, MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "EnvironmentData_set_IsGZipCompress");
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "EnvironmentData_set_IsGZipCompress");
   __this->_IsGZipCompress_k__BackingField = false;
 }
 
 static bool replacement_UnityWebRequest_get_isDone(UnityWebRequest *__this, MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_get_isDone");
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_get_isDone");
   return true;
 }
 
 static UnityWebRequestAsyncOperation *replacement_UnityWebRequest_SendWebRequest(UnityWebRequest *__this,
                                                                                  MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_SendWebRequest");
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_SendWebRequest");
   return nullptr;
 }
 
 static String *replacement_DownloadHandler_GetText(DownloadHandler *__this, MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "DownloadHandler_GetText");
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "DownloadHandler_GetText");
   return (String *)il2cpp_string_new("a");
 }
 
 static String *replacement_UnityWebRequest_get_error(UnityWebRequest *__this, MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_get_error");
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_get_error");
   return nullptr;
 }
 

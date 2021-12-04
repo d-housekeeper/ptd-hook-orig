@@ -48,7 +48,7 @@ static void dlopen_listener_on_enter(GumInvocationListener *listener, GumInvocat
 
 static void dlopen_listener_on_leave(GumInvocationListener *listener, GumInvocationContext *ic) {
   DLOpenOperation *op = GUM_IC_GET_INVOCATION_DATA(ic, DLOpenOperation);
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "dlopen %s", op->loadedLibName->c_str());
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "dlopen %s", op->loadedLibName->c_str());
   DLOpenListener *self = DLOPEN_LISTENER(listener);
   if (self->allHooksLoaded) {
     delete op->loadedLibName;
