@@ -18,18 +18,18 @@ static void replacement_EnvironmentData_set_IsGZipCompress(EnvironmentData *__th
 }
 
 static bool replacement_UnityWebRequest_get_isDone(UnityWebRequest *__this, MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "replacement_UnityWebRequest_get_isDone");
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_get_isDone");
   return true;
 }
 
 static UnityWebRequestAsyncOperation *replacement_UnityWebRequest_SendWebRequest(UnityWebRequest *__this,
                                                                                  MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "replacement_UnityWebRequest_SendWebRequest");
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "UnityWebRequest_SendWebRequest");
   return nullptr;
 }
 
 static String *replacement_DownloadHandler_GetText(DownloadHandler *__this, MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "replacement_DownloadHandler_GetText");
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "DownloadHandler_GetText");
   return (String *)il2cpp_string_new("a");
 }
 
