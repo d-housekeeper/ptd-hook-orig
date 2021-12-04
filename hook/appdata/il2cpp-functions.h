@@ -55,3 +55,6 @@ DO_APP_FUNC(0x02510FCC, String *, List_1_System_String__get_Item, (List_1_System
 DO_APP_FUNC(0x025079C8, void, List_1_System_Int32__Clear, (List_1_System_Int32_ * __this, MethodInfo * method));
 DO_APP_FUNC_METHODINFO(0x02F351DC, List_1_System_Int32__Clear__MethodInfo);
 DO_APP_FUNC(0x0250769C, void, List_1_System_Int32__Add, (List_1_System_Int32_ * __this, int32_t item, MethodInfo * method));
+
+// MD_TowerQuestList
+DO_APP_FUNC(0x01E769A4, MD_TowerQuest *, MD_TowerQuestList_GetData, (MD_TowerQuestList * __this, String * id, MethodInfo * method));

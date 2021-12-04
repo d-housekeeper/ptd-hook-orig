@@ -40,6 +40,11 @@ std::string getStartQuestResponse(const std::string &requestPM) {
   }
 
   if (quest == nullptr) {
+    MD_TowerQuestList *towerQuestList = (MD_TowerQuestList *)MDManager_GetData(MDType__Enum::TowerQuest, nullptr);
+    quest = (IMD_Quest *)MD_TowerQuestList_GetData(towerQuestList, questID, nullptr);
+  }
+
+  if (quest == nullptr) {
     __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Failed to get quest by ID. masterName: %s, questID: %s",
                         inMasterName.c_str(), inQuestID.c_str());
     return "";
