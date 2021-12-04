@@ -1,30 +1,30 @@
 #include "json.hpp"
+#include "start-quest-response.h"
 #include "utils.h"
 #include <android/log.h>
 #include <fstream>
 #include <sstream>
-#include <string.h>
 
 using json = nlohmann::json;
 
-const char *dataPath = "/storage/emulated/0/Android/data/"
-                       "com.square_enix.android_googleplay.PTD/files/Responses";
 const char *nativeTokenResponse = R"({"rp":{"nt":"none"}})";
 
-static std::string loadResponsePmFromFile(const char *apiName);
+static std::string loadResponsePmFromFile(const std::string &apiName);
 static std::string wrapResponsePm(const std::string &responsePm);
 
-std::string loadResponse(const char *apiName) {
-  if (strncmp(apiName, "GetNativeToken", 14) == 0) {
+std::string loadResponse(const std::string &apiName, const std::string &requestPM) {
+  if (apiName == "GetNativeToken") {
     return wrapResponsePm(std::string(nativeTokenResponse));
+  } else if (apiName == "StartQuest") {
+    return wrapResponsePm(getStartQuestResponse(requestPM));
   }
 
   std::string responsePm = loadResponsePmFromFile(apiName);
   return wrapResponsePm(responsePm);
 }
 
-static std::string loadResponsePmFromFile(const char *apiName) {
-  std::string fileName = string_format("%s/%s.json", dataPath, apiName);
+static std::string loadResponsePmFromFile(const std::string &apiName) {
+  std::string fileName = string_format("%s/Responses/%s.json", filesPath, apiName.c_str());
 
   std::ifstream t(fileName);
   if (t.fail()) {
@@ -41,5 +41,5 @@ static std::string loadResponsePmFromFile(const char *apiName) {
 static std::string wrapResponsePm(const std::string &responsePm) {
   json responseJson = {{"pm", responsePm}};
 
-  return std::string(responseJson.dump());
+  return responseJson.dump();
 }

@@ -2,4 +2,4 @@
 
 #include <string>
 
-std::string loadResponse(const char *apiName);
+std::string loadResponse(const std::string &apiName, const std::string &requestPM);

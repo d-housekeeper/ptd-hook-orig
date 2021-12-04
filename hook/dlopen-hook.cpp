@@ -56,7 +56,7 @@ static void dlopen_listener_on_leave(GumInvocationListener *listener, GumInvocat
     return;
   }
 
-  if (stringEndsWith(op->loadedLibName->c_str(), libName)) {
+  if (stringEndsWith(*op->loadedLibName, libName)) {
     __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Initializing IL2CPP");
     initAllHooks(self);
     delete op->loadedLibName;

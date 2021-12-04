@@ -18,14 +18,22 @@ template <typename... Args> std::string string_format(const std::string &format,
   return std::string(buf.get(), buf.get() + size - 1); // We don't want the '\0' inside
 }
 
-static bool stringEndsWith(const char *str, const char *suffix) {
-  if (!str || !suffix) {
-    return 0;
-  }
-  size_t lenStr = strlen(str);
-  size_t lenSuffix = strlen(suffix);
-  if (lenSuffix > lenStr) {
-    return 0;
-  }
-  return strncmp(str + lenStr - lenSuffix, suffix, lenSuffix) == 0;
+// https://stackoverflow.com/questions/874134/find-out-if-string-ends-with-another-string-in-c/42844629#42844629
+static bool stringEndsWith(const std::string &str, const char *suffix, unsigned suffixLen) {
+  return str.size() >= suffixLen && 0 == str.compare(str.size() - suffixLen, suffixLen, suffix, suffixLen);
 }
+
+static bool stringEndsWith(const std::string &str, const char *suffix) {
+  return stringEndsWith(str, suffix, std::string::traits_type::length(suffix));
+}
+
+static bool stringStartsWith(const std::string &str, const char *prefix, unsigned prefixLen) {
+  return str.size() >= prefixLen && 0 == str.compare(0, prefixLen, prefix, prefixLen);
+}
+
+static bool stringStartsWith(const std::string &str, const char *prefix) {
+  return stringStartsWith(str, prefix, std::string::traits_type::length(prefix));
+}
+
+static const char *filesPath = "/storage/emulated/0/Android/data/"
+                               "com.square_enix.android_googleplay.PTD/files";

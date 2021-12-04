@@ -12,7 +12,9 @@ add_library(hook
   response-loader.cpp
   disable-connect-hook.cpp
   local-data-mod.cpp
-  main.cpp)
+  start-quest-response.cpp
+  main.cpp
+  )
 include_directories(frida-gum-devkit
   appdata
   framework

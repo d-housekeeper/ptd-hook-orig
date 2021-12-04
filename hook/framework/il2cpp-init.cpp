@@ -51,8 +51,8 @@ void init_il2cpp() {
 #undef DO_APP_FUNC
 #undef DO_APP_FUNC_METHODINFO
 
-  // Define TypeInfo variables
-  // #define DO_TYPEDEF(a, n) n ## __TypeInfo = (n ## __Class**) (baseAddress + a);
-  // #include "il2cpp-types-ptr.h"
-  // #undef DO_TYPEDEF
+// Define TypeInfo variables
+#define DO_TYPEDEF(a, n) n##__TypeInfo = (n##__Class **)(baseAddress + a);
+#include "il2cpp-types-ptr.h"
+#undef DO_TYPEDEF
 }

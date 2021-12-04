@@ -32,3 +32,16 @@ std::string il2cppi_to_string(Il2CppString *str) {
 
 // Helper function to convert System.String to std::string
 std::string il2cppi_to_string(app::String *str) { return il2cppi_to_string(reinterpret_cast<Il2CppString *>(str)); }
+
+// Helper function to get object's vtable
+uintptr_t il2cppi_get_interface_vtable(app::Object *object, Il2CppClass *interfaceType) {
+  Il2CppClass *klass = (Il2CppClass *)object->klass;
+  for (uint16_t i = 0; i < klass->interface_offsets_count; i++) {
+    Il2CppRuntimeInterfaceOffsetPair interfaceOffset = klass->interfaceOffsets[i];
+    if (interfaceOffset.interfaceType == interfaceType) {
+      return (uintptr_t)&klass->vtable + (sizeof(VirtualInvokeData) * (uintptr_t)interfaceOffset.offset);
+    }
+  }
+
+  return (uintptr_t) nullptr;
+}

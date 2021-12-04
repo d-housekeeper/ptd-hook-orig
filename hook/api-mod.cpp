@@ -42,7 +42,20 @@ static RequestBase_ResponseParameter *replacement_RequestBase_DecodeResultData(R
                                                                                MethodInfo *method) {
   std::string apiName = il2cppi_to_string(__this->_ApiName_k__BackingField);
   __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "RequestBase_DecodeResultData: %s", apiName.c_str());
-  std::string response = loadResponse(apiName.c_str());
+
+  MethodInfo *tryGetValueMethod = (MethodInfo *)__this->_RequestPostParameter->klass->vtable.TryGetValue.method;
+  String *pmKey = (String *)il2cpp_string_new("pm");
+  String *pmValue = nullptr;
+  std::string stdPmValue;
+  bool tryGetValueSuccess = Dictionary_2_System_String_System_Object__TryGetValue(
+      __this->_RequestPostParameter, pmKey, (Object **)&pmValue, tryGetValueMethod);
+  if (tryGetValueSuccess) {
+    stdPmValue = il2cppi_to_string(pmValue);
+  } else {
+    __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Failed to get Request PM value from map");
+  }
+
+  std::string response = loadResponse(apiName, stdPmValue);
   String *replacementReceiveData = (String *)il2cpp_string_new(response.c_str());
   RequestBase_ResponseParameter *ret = RequestBase_DecodeResultData(__this, replacementReceiveData, method);
 
