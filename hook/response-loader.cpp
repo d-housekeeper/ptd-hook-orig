@@ -7,15 +7,11 @@
 
 using json = nlohmann::json;
 
-const char *nativeTokenResponse = R"({"rp":{"nt":"none"}})";
-
 static std::string loadResponsePmFromFile(const std::string &apiName);
 static std::string wrapResponsePm(const std::string &responsePm);
 
 std::string loadResponse(const std::string &apiName, const std::string &requestPM) {
-  if (apiName == "GetNativeToken") {
-    return wrapResponsePm(std::string(nativeTokenResponse));
-  } else if (apiName == "StartQuest") {
+  if (apiName == "StartQuest") {
     return wrapResponsePm(getStartQuestResponse(requestPM));
   }
 
