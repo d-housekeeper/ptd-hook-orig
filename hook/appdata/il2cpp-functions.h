@@ -1,4 +1,5 @@
 // EnvironmentData
+DO_APP_FUNC(0x0182002C, String *, EnvironmentData_get_UUID, (EnvironmentData * __this, MethodInfo * method));
 DO_APP_FUNC(0x0181FD00, bool, EnvironmentData_get_CurrentIsAesEncrypt, (EnvironmentData * __this, MethodInfo * method));
 
 // UnityWebRequest
@@ -17,9 +18,17 @@ DO_APP_FUNC(0x0181FC34, void, EnvironmentData_set_IsGZipCompress, (EnvironmentDa
 
 // LocalData
 DO_APP_FUNC(0x0098CD24, bool, LocalData_get_DisuseGooglePlayService, (LocalData * __this, MethodInfo * method));
+DO_APP_FUNC(0x0098CD14, Dictionary_2_System_String_System_Int32_ *, LocalData_get_DownloadedMovieVer, (LocalData * __this, MethodInfo * method));
+DO_APP_FUNC(0x0098CBF8, List_1_System_Int32_ *, LocalData_get_TutorialProgressData, (LocalData * __this, MethodInfo * method));
+DO_APP_FUNC(0x0098CC08, int32_t, LocalData_get_PartialTutorialData, (LocalData * __this, MethodInfo * method));
 
 // Dictionary_2_System_String_System_Object_
 DO_APP_FUNC(0x0239AFE8, bool, Dictionary_2_System_String_System_Object__TryGetValue, (Dictionary_2_System_String_System_Object_ * __this, String * key, Object * * value, MethodInfo * method));
+
+// Dictionary_2_System_String_System_Int32_
+DO_APP_FUNC(0x0232625C, void, Dictionary_2_System_String_System_Int32__Clear, (Dictionary_2_System_String_System_Int32_ * __this, MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F338FC, Dictionary_2_System_String_System_Int32__Clear__MethodInfo);
+DO_APP_FUNC(0x02325EBC, void, Dictionary_2_System_String_System_Int32__set_Item, (Dictionary_2_System_String_System_Int32_ * __this, String * key, int32_t value, MethodInfo * method));
 
 // MDManager
 DO_APP_FUNC(0x0074BA9C, Object *, MDManager_GetData, (MDType__Enum key, MethodInfo * method));
@@ -41,3 +50,8 @@ DO_APP_FUNC(0x024931F4, MD_EnemyGroupHelper_WaveInfo_LotEnemy, List_1_MD_EnemyGr
 // List_1_System_String
 DO_APP_FUNC(0x02510F18, int32_t, List_1_System_String__get_Count, (List_1_System_String_ * __this, MethodInfo * method));
 DO_APP_FUNC(0x02510FCC, String *, List_1_System_String__get_Item, (List_1_System_String_ * __this, int32_t index, MethodInfo * method));
+
+// List_1_System_Int32_
+DO_APP_FUNC(0x025079C8, void, List_1_System_Int32__Clear, (List_1_System_Int32_ * __this, MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F351DC, List_1_System_Int32__Clear__MethodInfo);
+DO_APP_FUNC(0x0250769C, void, List_1_System_Int32__Add, (List_1_System_Int32_ * __this, int32_t item, MethodInfo * method));
