@@ -4,6 +4,8 @@
 #include "json.hpp"
 #include "string-utils.h"
 #include <android/log.h>
+#include <functional>
+#include <vector>
 
 using json = nlohmann::json;
 using namespace app;
@@ -13,6 +15,60 @@ using IMD_Quest_Get_EnemyGroupID_Func = String *(IMD_Quest *__this, MethodInfo *
 
 static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Quest *quest);
 static std::vector<json> getPlayerQuestEnemies(List_1_MD_EnemyGroupHelper_WaveInfo_ *waveInfoList);
+
+IMD_Quest *tryGetQuest(String *masterName, String *questID) {
+  // clang-format off
+  std::function<IMD_Quest*()> questLoaders[] = {
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetNormalEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetToubatsuEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetTouhaEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetRankingEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetPointEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetMultiEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetDamageEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetVoteEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetGirlLabyrinthQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest * {
+      return (IMD_Quest *)MDManager_GetScenarioQuestFromMasterName(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest * {
+      return (IMD_Quest *)MDManager_GetRaidEventQuest_1(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      MD_TowerQuestList *towerQuestList = (MD_TowerQuestList *)MDManager_GetData(MDType__Enum::TowerQuest, nullptr);
+      return (IMD_Quest *)MD_TowerQuestList_GetData(towerQuestList, questID, nullptr);
+    },
+  };
+  // clang-format on
+  size_t questLoaderCount = sizeof(questLoaders) / sizeof(questLoaders[0]);
+
+  for (int i = 0; i < questLoaderCount; ++i) {
+    IMD_Quest *quest = questLoaders[i]();
+    if (quest != nullptr) {
+      return quest;
+    }
+  }
+
+  return nullptr;
+}
 
 std::string getStartQuestResponse(const std::string &requestPM) {
   // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "request: %s", requestPM.c_str());
@@ -34,16 +90,7 @@ std::string getStartQuestResponse(const std::string &requestPM) {
   std::string inQuestID = *questIDIt;
   String *masterName = (String *)il2cpp_string_new(inMasterName.c_str());
   String *questID = (String *)il2cpp_string_new(inQuestID.c_str());
-  IMD_Quest *quest = (IMD_Quest *)MDManager_GetScenarioQuestFromMasterName(masterName, questID, nullptr);
-
-  if (quest == nullptr) {
-    quest = (IMD_Quest *)MDManager_GetGirlLabyrinthQuest(masterName, questID, nullptr);
-  }
-
-  if (quest == nullptr) {
-    MD_TowerQuestList *towerQuestList = (MD_TowerQuestList *)MDManager_GetData(MDType__Enum::TowerQuest, nullptr);
-    quest = (IMD_Quest *)MD_TowerQuestList_GetData(towerQuestList, questID, nullptr);
-  }
+  IMD_Quest *quest = tryGetQuest(masterName, questID);
 
   if (quest == nullptr) {
     __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Failed to get quest by ID. masterName: %s, questID: %s",
@@ -68,11 +115,17 @@ std::string getStartQuestResponse(const std::string &requestPM) {
     return "";
   }
 
-  json responseJson = {{"np", 0},
-                       {"tm", "2021-10-29 10:00:00"},
-                       {"rt", 0},
-                       {"rp", {{"pqe", playerQuestEnemies}, {"pqTmp", "12345678"}}}};
-
+  // clang-format off
+  json responseJson = {
+    {"np", 0},
+    {"tm", "2021-10-29 10:00:00"},
+    {"rt", 0},
+    {"rp", {
+      {"pqe", playerQuestEnemies},
+      {"pqTmp", "12345678"}
+    }}
+  };
+  // clang-format on
   return responseJson.dump();
 }
 

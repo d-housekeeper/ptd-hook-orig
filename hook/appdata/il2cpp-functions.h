@@ -32,8 +32,17 @@ DO_APP_FUNC(0x02325EBC, void, Dictionary_2_System_String_System_Int32__set_Item,
 
 // MDManager
 DO_APP_FUNC(0x0074BA9C, Object *, MDManager_GetData, (MDType__Enum key, MethodInfo * method));
-DO_APP_FUNC(0x00758998, MD_ScenarioQuest *, MDManager_GetScenarioQuestFromMasterName, (String * masterName, String * id, MethodInfo * method));
+DO_APP_FUNC(0x0075016C, MD_NormalEventQuest *, MDManager_GetNormalEventQuest, (String * noramlQuestMaster, String * normalQuestID, MethodInfo * method));
+DO_APP_FUNC(0x0075105C, MD_ToubatsuEventQuest *, MDManager_GetToubatsuEventQuest, (String * toubatsuQuestMaster, String * toubatsuQuestID, MethodInfo * method));
+DO_APP_FUNC(0x00751478, MD_TouhaEventQuest *, MDManager_GetTouhaEventQuest, (String * touhaQuestMaster, String * touhaQuestID, MethodInfo * method));
+DO_APP_FUNC(0x00751894, MD_RankingEventQuest *, MDManager_GetRankingEventQuest, (String * questMaster, String * questID, MethodInfo * method));
+DO_APP_FUNC(0x0075234C, MD_PointEventQuest *, MDManager_GetPointEventQuest, (String * questMaster, String * questID, MethodInfo * method));
+DO_APP_FUNC(0x00752768, MD_MultiEventQuest *, MDManager_GetMultiEventQuest, (String * questMaster, String * questID, MethodInfo * method));
+DO_APP_FUNC(0x00752B84, MD_DamageEventQuest *, MDManager_GetDamageEventQuest, (String * questMaster, String * questID, MethodInfo * method));
+DO_APP_FUNC(0x00753450, MD_VoteQuest *, MDManager_GetVoteEventQuest, (String * questMaster, String * questID, MethodInfo * method));
 DO_APP_FUNC(0x00755C90, MD_GirlLabyrinthQuest *, MDManager_GetGirlLabyrinthQuest, (String * questMasterName, String * questID, MethodInfo * method));
+DO_APP_FUNC(0x00758998, MD_ScenarioQuest *, MDManager_GetScenarioQuestFromMasterName, (String * masterName, String * id, MethodInfo * method));
+DO_APP_FUNC(0x007670AC, MD_RaidEventQuest *, MDManager_GetRaidEventQuest_1, (String * mdname, String * questid, MethodInfo * method));
 
 // MD_EnemyGroupHelper
 DO_APP_FUNC(0x01B0A0FC, void, MD_EnemyGroupHelper__ctor, (MD_EnemyGroupHelper * __this, MD_EnemyGroup * mdData, MethodInfo * method));
