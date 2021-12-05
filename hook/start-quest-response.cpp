@@ -1,7 +1,8 @@
+#include "android-utils.h"
 #include "helpers.h"
 #include "il2cpp-appdata.h"
 #include "json.hpp"
-#include "utils.h"
+#include "string-utils.h"
 #include <android/log.h>
 
 using json = nlohmann::json;

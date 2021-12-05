@@ -1,8 +1,8 @@
+#include "android-utils.h"
 #include "frida-gum.h"
 #include "helpers.h"
 #include "il2cpp-appdata.h"
 #include "response-loader.h"
-#include "utils.h"
 #include <android/log.h>
 
 using namespace app;

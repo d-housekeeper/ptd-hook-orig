@@ -1,7 +1,7 @@
+#include "android-utils.h"
 #include "disable-connect-hook.h"
 #include "dlopen-hook.h"
 #include "frida-gum.h"
-#include "utils.h"
 #include <android/log.h>
 
 __attribute__((constructor)) void hookMain() {

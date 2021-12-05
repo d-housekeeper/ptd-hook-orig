@@ -13,6 +13,7 @@ add_library(hook
   disable-connect-hook.cpp
   local-data-mod.cpp
   start-quest-response.cpp
+  android-utils.cpp
   main.cpp
   )
 include_directories(frida-gum-devkit

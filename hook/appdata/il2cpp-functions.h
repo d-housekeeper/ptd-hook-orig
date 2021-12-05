@@ -58,3 +58,15 @@ DO_APP_FUNC(0x0250769C, void, List_1_System_Int32__Add, (List_1_System_Int32_ * 
 
 // MD_TowerQuestList
 DO_APP_FUNC(0x01E769A4, MD_TowerQuest *, MD_TowerQuestList_GetData, (MD_TowerQuestList * __this, String * id, MethodInfo * method));
+
+// AndroidJavaClass
+DO_APP_FUNC(0x01E9F520, void, AndroidJavaClass__ctor, (AndroidJavaClass * __this, String * className, MethodInfo * method));
+
+// AndroidJavaObject
+DO_APP_FUNC(0x01D3B0D8, AndroidJavaObject *, AndroidJavaObject_Call_2, (AndroidJavaObject * __this, String * methodName, Object__Array * args, MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F20B88, AndroidJavaObject_Call_2__MethodInfo);
+DO_APP_FUNC(0x01D3B0D8, String *, AndroidJavaObject_Call_3, (AndroidJavaObject * __this, String * methodName, Object__Array * args, MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F20B84, AndroidJavaObject_Call_3__MethodInfo);
+DO_APP_FUNC(0x01EA0034, void, AndroidJavaObject__Dispose, (AndroidJavaObject * __this, MethodInfo * method));
+DO_APP_FUNC(0x01D5A328, AndroidJavaObject *, AndroidJavaObject_GetStatic_3, (AndroidJavaObject * __this, String * fieldName, MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F1E44C, AndroidJavaObject_GetStatic_3__MethodInfo);

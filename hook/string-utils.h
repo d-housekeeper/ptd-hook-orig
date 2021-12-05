@@ -4,8 +4,6 @@
 #include <stdexcept>
 #include <string>
 
-static const char *androidLogTag = "PTDHook";
-
 // https://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf/26221725#26221725
 template <typename... Args> std::string string_format(const std::string &format, Args... args) {
   int size_s = std::snprintf(nullptr, 0, format.c_str(), args...) + 1; // Extra space for '\0'
@@ -34,6 +32,3 @@ static bool stringStartsWith(const std::string &str, const char *prefix, unsigne
 static bool stringStartsWith(const std::string &str, const char *prefix) {
   return stringStartsWith(str, prefix, std::string::traits_type::length(prefix));
 }
-
-static const char *filesPath = "/storage/emulated/0/Android/data/"
-                               "com.square_enix.android_googleplay.PTD/files";

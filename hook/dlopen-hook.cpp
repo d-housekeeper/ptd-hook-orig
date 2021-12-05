@@ -1,9 +1,10 @@
+#include "android-utils.h"
 #include "api-mod.h"
 #include "frida-gum.h"
 #include "helpers.h"
 #include "il2cpp-init.h"
 #include "local-data-mod.h"
-#include "utils.h"
+#include "string-utils.h"
 
 #include <android/log.h>
 
