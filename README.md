@@ -21,6 +21,7 @@ Changes to user data is lost after restart, because the mod does not do anything
 * Network permission is removed from AndroidManifest.xml to prevent any attempts of network connection.
 * Disables anti cheat library embedded in the apk by replacing it with dummy one. This only works with this specific version of PTD, as the antiCheatValues changed between releases of the app. It will probably not work on other apps either. I will not write how I got those values, because that might make disabling cheat detection on other games easier. (Other games might be using more sophisticated cheat detection techniques and can't be disabled in the same way, I just don't know.)
 * Overrides some of local data fields to trick the app into believing that you already have player data locally.
+* Prevents `sign in to Google` activity from showing up when you launch the app for the first time.
 * Creates modded apk to install those modified/added files. Re-installing the apk with different signing key also prevents updates from showing up on Google Play.
 
 ## Prerequisites
