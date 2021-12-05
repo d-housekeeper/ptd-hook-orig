@@ -20,17 +20,18 @@ Changes to user data is lost after restart, because the mod does not do anything
 * Installs hooks to disable all requests with `UnityWebRequest` wrapper class used by the game, and replaces responses with ones stored in internal storage.
 * Network permission is removed from AndroidManifest.xml to prevent any attempts of network connection.
 * Disables anti cheat library embedded in the apk by replacing it with dummy one. This only works with this specific version of PTD, as the antiCheatValues changed between releases of the app. It will probably not work on other apps either. I will not write how I got those values, because that might make disabling cheat detection on other games easier. (Other games might be using more sophisticated cheat detection techniques and can't be disabled in the same way, I just don't know.)
+* Overrides some of local data fields to trick the app into believing that you already have player data locally.
 * Creates modded apk to install those modified/added files. Re-installing the apk with different signing key also prevents updates from showing up on Google Play.
 
 ## Prerequisites
 
 * You need to have an Android device (or an emulator device) with PTD apk, assets directory (`md`, `prim`) and some of files in `SaveData` directory.
-  *
   * `pa.ds` and `ver_0.ds` in `SaveData` directory keep truck of downloaded assets, and are required along with `md` and `prim` directory.
   * I recommend setting up a fresh environment on emulators like BlueStacks and restore backup there to make sure that your backup contains all data the app needs. You can restore save data from the backup, or delete all files in SaveData and restore `pa.ds` and `ver_0.ds` again to restart from fresh state.
   * The apk must be the latest version before service shutdown (5.1.10). Any version newer or older will not work.
   * You need to have a copy of `md` directory on development machine to generate login response.
   * Keystore file for re-signing modded apk. Create new one with `keytool` if you don't already have one.
+  * If you have previously signed into the game, and don't want to update last played date on Google Play Games each time you launch the game, revoke app permission on Google account security settings.
 
 Build environment setup is automated with nix package manager.
 You need a linux machine (either real machine or virtual machine) with nix installed: https://nixos.org/download.html
