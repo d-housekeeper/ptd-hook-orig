@@ -25,7 +25,7 @@ static std::string loadResponsePmFromFile(const std::string &apiName) {
 
   std::ifstream t(fileName);
   if (t.fail()) {
-    __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Failed to load response file from %s", fileName.c_str());
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to load response file from %s", fileName.c_str());
   } else {
     __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Loading response file from %s", fileName.c_str());
   }

@@ -74,14 +74,14 @@ std::string getStartQuestResponse(const std::string &requestPM) {
   // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "request: %s", requestPM.c_str());
   json requestJSON = json::parse(requestPM, nullptr, true);
   if (requestJSON.is_discarded()) {
-    __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Failed to parse StartQuest request");
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to parse StartQuest request");
     return "";
   }
   json::const_iterator masterNameIt = requestJSON.find("mn");
   json::const_iterator questIDIt = requestJSON.find("qId");
   if (masterNameIt == requestJSON.end() || questIDIt == requestJSON.end() || !(*masterNameIt).is_string() ||
       !(*questIDIt).is_string()) {
-    __android_log_print(ANDROID_LOG_WARN, androidLogTag,
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag,
                         "StartQuest request missing required attributes, or its values are invalid (mn, qId)");
     return "";
   }
@@ -93,7 +93,7 @@ std::string getStartQuestResponse(const std::string &requestPM) {
   IMD_Quest *quest = tryGetQuest(masterName, questID);
 
   if (quest == nullptr) {
-    __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Failed to get quest by ID. masterName: %s, questID: %s",
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to get quest by ID. masterName: %s, questID: %s",
                         inMasterName.c_str(), inQuestID.c_str());
     return "";
   }
@@ -101,7 +101,7 @@ std::string getStartQuestResponse(const std::string &requestPM) {
   List_1_MD_EnemyGroupHelper_WaveInfo_ *waveInfoList = getWaveInfoListFromMDQuest(quest);
 
   if (waveInfoList == nullptr) {
-    __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Failed to get WaveInfoList");
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to get WaveInfoList");
 
     return "";
   }
@@ -109,7 +109,7 @@ std::string getStartQuestResponse(const std::string &requestPM) {
   std::vector<json> playerQuestEnemies = getPlayerQuestEnemies(waveInfoList);
 
   if (playerQuestEnemies.empty()) {
-    __android_log_print(ANDROID_LOG_WARN, androidLogTag,
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag,
                         "StartQuest request missing required attributes or invalid (mn, qId)");
 
     return "";
