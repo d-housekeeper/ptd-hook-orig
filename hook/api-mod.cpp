@@ -52,7 +52,7 @@ static RequestBase_ResponseParameter *replacement_RequestBase_DecodeResultData(R
   if (tryGetValueSuccess) {
     stdPmValue = il2cppi_to_string(pmValue);
   } else {
-    __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Failed to get Request PM value from map");
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to get Request PM value from map");
   }
 
   std::string response = loadResponse(apiName, stdPmValue);
