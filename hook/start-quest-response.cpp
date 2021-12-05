@@ -90,10 +90,12 @@ std::string getStartQuestResponse(const std::string &requestPM) {
   std::string inQuestID = *questIDIt;
   String *masterName = (String *)il2cpp_string_new(inMasterName.c_str());
   String *questID = (String *)il2cpp_string_new(inQuestID.c_str());
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Generating StartQuestResponse. masterName: %s questID: %s",
+                      inMasterName.c_str(), inQuestID.c_str());
   IMD_Quest *quest = tryGetQuest(masterName, questID);
 
   if (quest == nullptr) {
-    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to get quest by ID. masterName: %s, questID: %s",
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to get quest by ID. masterName: %s questID: %s",
                         inMasterName.c_str(), inQuestID.c_str());
     return "";
   }
