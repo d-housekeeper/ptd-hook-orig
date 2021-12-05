@@ -10,7 +10,6 @@ add_library(hook
   framework/helpers.cpp
   framework/il2cpp-init.cpp
   response-loader.cpp
-  disable-connect-hook.cpp
   local-data-mod.cpp
   start-quest-response.cpp
   android-utils.cpp
