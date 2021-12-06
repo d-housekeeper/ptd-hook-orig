@@ -1,3 +1,4 @@
+#include "start-quest-response.h"
 #include "android-utils.h"
 #include "helpers.h"
 #include "il2cpp-appdata.h"
@@ -16,7 +17,7 @@ using IMD_Quest_Get_EnemyGroupID_Func = String *(IMD_Quest *__this, MethodInfo *
 static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Quest *quest);
 static std::vector<json> getPlayerQuestEnemies(List_1_MD_EnemyGroupHelper_WaveInfo_ *waveInfoList);
 
-IMD_Quest *tryGetQuest(String *masterName, String *questID) {
+static IMD_Quest *tryGetQuest(String *masterName, String *questID) {
   // clang-format off
   std::function<IMD_Quest*()> questLoaders[] = {
     [=]() -> IMD_Quest* {
@@ -70,13 +71,7 @@ IMD_Quest *tryGetQuest(String *masterName, String *questID) {
   return nullptr;
 }
 
-std::string getStartQuestResponse(const std::string &requestPM) {
-  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "request: %s", requestPM.c_str());
-  json requestJSON = json::parse(requestPM, nullptr, true);
-  if (requestJSON.is_discarded()) {
-    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to parse StartQuest request");
-    return "";
-  }
+std::string getStartQuestResponse(const nlohmann::json &requestJSON) {
   json::const_iterator masterNameIt = requestJSON.find("mn");
   json::const_iterator questIDIt = requestJSON.find("qId");
   if (masterNameIt == requestJSON.end() || questIDIt == requestJSON.end() || !(*masterNameIt).is_string() ||

@@ -1,3 +1,4 @@
+
 #include "android-utils.h"
 #include "json.hpp"
 #include "responses/start-quest-response.h"
@@ -12,8 +13,14 @@ static std::string loadResponsePmFromFile(const std::string &apiName);
 static std::string wrapResponsePm(const std::string &responsePm);
 
 std::string loadResponse(const std::string &apiName, const std::string &requestPM) {
+  json requestJSON = json::parse(requestPM, nullptr, true);
+  if (requestJSON.is_discarded()) {
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to parse %s request", apiName.c_str());
+    return "";
+  }
+
   if (apiName == "StartQuest") {
-    return wrapResponsePm(getStartQuestResponse(requestPM));
+    return wrapResponsePm(getStartQuestResponse(requestJSON));
   }
 
   std::string responsePm = loadResponsePmFromFile(apiName);

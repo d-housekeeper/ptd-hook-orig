@@ -1,5 +1,5 @@
 #pragma once
 
-#include <string>
+#include "json.hpp"
 
-std::string getStartQuestResponse(const std::string &requestPM);
+std::string getStartQuestResponse(const nlohmann::json &json);
