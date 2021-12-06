@@ -11,13 +11,14 @@ add_library(hook
   framework/il2cpp-init.cpp
   response-loader.cpp
   local-data-mod.cpp
-  start-quest-response.cpp
+  responses/start-quest-response.cpp
   android-utils.cpp
   main.cpp
   )
 include_directories(frida-gum-devkit
   appdata
   framework
+  ./
   )
 target_precompile_headers(hook PRIVATE framework/pch-il2cpp.h)
 target_link_libraries(hook

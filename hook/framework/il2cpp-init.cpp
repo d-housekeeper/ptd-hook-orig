@@ -28,7 +28,7 @@ namespace app {
 }
 #undef DO_TYPEDEF
 
-#include "../android-utils.h"
+#include "android-utils.h"
 #include <android/log.h>
 
 // IL2CPP application initializer

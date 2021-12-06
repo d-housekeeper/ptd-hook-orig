@@ -1,6 +1,6 @@
 #include "android-utils.h"
 #include "json.hpp"
-#include "start-quest-response.h"
+#include "responses/start-quest-response.h"
 #include "string-utils.h"
 #include <android/log.h>
 #include <fstream>
