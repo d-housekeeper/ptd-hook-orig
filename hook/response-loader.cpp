@@ -32,12 +32,17 @@ static std::string loadResponsePmFromFile(const std::string &apiName) {
 
   std::ifstream t(fileName);
   if (t.fail()) {
-    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to load response file from %s", fileName.c_str());
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to open response file at %s", fileName.c_str());
+    return "";
   } else {
     __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Loading response file from %s", fileName.c_str());
   }
+
   std::stringstream buffer;
-  buffer << t.rdbuf();
+  if (!(buffer << t.rdbuf())) {
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to read response file from %s", fileName.c_str());
+    return "";
+  }
 
   return buffer.str();
 }
