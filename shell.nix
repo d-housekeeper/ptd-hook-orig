@@ -11,8 +11,7 @@ let
       })
     ];
   };
-  unstablePkgs = import sources.nixpkgs-unstable { };
-  il2cppinspector = unstablePkgs.callPackage ./il2cppinspector/default.nix { };
+  il2cppinspector = pkgs.callPackage ./il2cppinspector/default.nix { };
   ptd-tool = pkgs.callPackage ./ptd-tool/default.nix { };
   androidComposition = pkgs.androidenv.composeAndroidPackages {
     includeNDK = true;
@@ -36,7 +35,6 @@ pkgs.mkShell rec {
   ] ++ (with pkgs; [
     jq
     hashdeep
-  ]) ++ (with unstablePkgs; [
     apktool
   ]);
 
