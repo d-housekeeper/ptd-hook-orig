@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.18.1)
 project(hook)
 
 set(FRIDA_GUM_DEVKIT_DIR "frida-gum-devkit")
+set(CMAKE_CXX_STANDARD 20)
 
 add_library(hook
   SHARED
@@ -11,7 +12,13 @@ add_library(hook
   framework/il2cpp-init.cpp
   response-loader.cpp
   local-data-mod.cpp
+  responses/equipment-avatar-response.cpp
+  responses/login-response.cpp
+  responses/set-favorite-character-response.cpp
+  responses/set-idol-class-response.cpp
+  responses/set-team-response.cpp
   responses/start-quest-response.cpp
+  responses/stored-response.cpp
   android-utils.cpp
   main.cpp
   )
