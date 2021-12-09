@@ -3,13 +3,14 @@ set -eu
 : "$KEYSTORE_FILE"
 
 rm -f ./out/cmake/CMakeCache.txt
-cmake . -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake" \
+cmake . -GNinja -DCMAKE_TOOLCHAIN_FILE="$ANDROID_NDK_ROOT/build/cmake/android.toolchain.cmake" \
   -B./out/cmake \
   -DANDROID_PLATFORM=21 \
   -DANDROID_ABI=armeabi-v7a \
-  -DCMAKE_BUILD_TYPE=Release
+  -DCMAKE_BUILD_TYPE=Release \
+  -DFORCE_COLORED_OUTPUT=TRUE
 pushd ./out/cmake
-make
+ninja
 popd
 
 cp -R ./smali/ ./out/apktool/
