@@ -8,21 +8,27 @@ add_library(hook
   SHARED
   dlopen-hook.cpp
   api-mod.cpp
+  local-data-mod.cpp
+  md-mod.cpp
   framework/helpers.cpp
   framework/il2cpp-init.cpp
   response-loader.cpp
-  local-data-mod.cpp
   responses/equipment-avatar-response.cpp
   responses/login-response.cpp
+  responses/response-utils.cpp
   responses/set-favorite-character-response.cpp
   responses/set-idol-class-response.cpp
   responses/set-team-response.cpp
   responses/start-quest-response.cpp
   responses/stored-response.cpp
-  android-utils.cpp
+  android-storage-path.cpp
+  time-utils.cpp
+  jni-utils.cpp
+  config.cpp
   main.cpp
   )
 include_directories(frida-gum-devkit
+  date
   appdata
   framework
   ./

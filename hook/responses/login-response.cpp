@@ -1,26 +1,36 @@
 #include "login-response.h"
 #include "android-utils.h"
-#include "json.hpp"
+#include "date/date.h"
 #include "response-loader.h"
+#include "response-utils.h"
 #include "stored-response.h"
 #include <android/log.h>
-#include <chrono>
 #include <filesystem>
 #include <fstream>
 
 using json = nlohmann::json;
 using ordered_json = nlohmann::ordered_json;
 namespace fs = std::filesystem;
+using namespace date;
+using namespace std::chrono;
 
-bool loadParsedLoginResponse(ResponseLoaderContext *context, const std::string &responsePM) {
-  try {
-    context->loginResponse = ordered_json::parse(responsePM);
-  } catch (json::exception &e) {
-    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Invalid Login response: %s", e.what());
-    return false;
+std::string getLoginResponse(ResponseLoaderContext *context, const nlohmann::json &requestJSON) {
+  std::string responsePM = loadResponsePmFromFile("Login");
+  if (responsePM.empty()) {
+    return "";
   }
 
-  return true;
+  try {
+    context->loginResponse = ordered_json::parse(responsePM);
+    // clang-format off
+    context->loginResponse.merge_patch(getBaseResponse());
+    // clang-format on
+  } catch (json::exception &e) {
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to parse Login response: %s", e.what());
+    return "";
+  }
+
+  return context->loginResponse.dump();
 }
 
 bool saveLoginResponse(ResponseLoaderContext *context) {

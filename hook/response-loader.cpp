@@ -15,6 +15,8 @@
 #include <sstream>
 
 using json = nlohmann::json;
+using ResponseLoaderFunc = std::function<std::string(ResponseLoaderContext *, json)>;
+using ResponseLoaderMap = std::map<std::string, ResponseLoaderFunc>;
 
 static std::string wrapResponsePm(const std::string &responsePm);
 
@@ -30,24 +32,21 @@ std::string loadResponse(const std::string &apiName, const std::string &requestP
     return "";
   }
 
+  ResponseLoaderMap responseLoaders = {
+      {"Login", getLoginResponse},
+      {"EquipmentAvatar", getEquipmentAvatarResponse},
+      {"SetFavoriteCharacter", getSetFavoriteCharacterResponse},
+      {"SetIdolClass", getSetIdolClassResponse},
+      {"SetTeam", getSetTeamResponse},
+      {"StartQuest", getStartQuestResponse},
+  };
   std::string responsePM;
-  if (apiName == "Login") {
-    responsePM = loadResponsePmFromFile(apiName);
-    if (!loadParsedLoginResponse(&context, responsePM)) {
-      return "";
-    }
-  } else if (apiName == "EquipmentAvatar") {
-    responsePM = getEquipmentAvatarResponse(&context, requestJSON);
-  } else if (apiName == "SetFavoriteCharacter") {
-    responsePM = getSetFavoriteCharacterResponse(&context, requestJSON);
-  } else if (apiName == "SetIdolClass") {
-    responsePM = getSetIdolClassResponse(&context, requestJSON);
-  } else if (apiName == "SetTeam") {
-    responsePM = getSetTeamResponse(&context, requestJSON);
-  } else if (apiName == "StartQuest") {
-    responsePM = getStartQuestResponse(requestJSON);
+  ResponseLoaderMap::const_iterator responseLoaderIt = responseLoaders.find(apiName);
+  if (responseLoaderIt != responseLoaders.end()) {
+    ResponseLoaderFunc responseLoader = (*responseLoaderIt).second;
+    responsePM = responseLoader(&context, requestJSON);
   } else {
-    responsePM = loadResponsePmFromFile(apiName);
+    responsePM = getStoredResponse(apiName);
   }
 
   return wrapResponsePm(responsePM);

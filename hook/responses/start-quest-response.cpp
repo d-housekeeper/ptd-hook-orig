@@ -3,6 +3,7 @@
 #include "helpers.h"
 #include "il2cpp-appdata.h"
 #include "json.hpp"
+#include "response-utils.h"
 #include "string-utils.h"
 #include <android/log.h>
 #include <functional>
@@ -71,7 +72,7 @@ static IMD_Quest *tryGetQuest(String *masterName, String *questID) {
   return nullptr;
 }
 
-std::string getStartQuestResponse(const nlohmann::json &requestJSON) {
+std::string getStartQuestResponse(ResponseLoaderContext *context, const nlohmann::json &requestJSON) {
   json::const_iterator masterNameIt = requestJSON.find("mn");
   json::const_iterator questIDIt = requestJSON.find("qId");
   if (masterNameIt == requestJSON.end() || questIDIt == requestJSON.end() || !(*masterNameIt).is_string() ||
@@ -112,16 +113,14 @@ std::string getStartQuestResponse(const nlohmann::json &requestJSON) {
     return "";
   }
 
+  json responseJson = getBaseResponse();
   // clang-format off
-  json responseJson = {
-    {"np", 0},
-    {"tm", "2021-10-29 10:00:00"},
-    {"rt", 0},
+  responseJson.merge_patch({
     {"rp", {
       {"pqe", playerQuestEnemies},
       {"pqTmp", "12345678"}
     }}
-  };
+  });
   // clang-format on
   return responseJson.dump();
 }

@@ -3,6 +3,6 @@
 
 struct ResponseLoaderContext;
 
-bool loadParsedLoginResponse(ResponseLoaderContext *context, const std::string &response);
+std::string getLoginResponse(ResponseLoaderContext *context, const nlohmann::json &requestJSON);
 
 bool saveLoginResponse(ResponseLoaderContext *context);

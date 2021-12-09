@@ -62,6 +62,11 @@ static RequestBase_ResponseParameter *replacement_RequestBase_DecodeResultData(R
   return ret;
 }
 
+bool replacement_ReLoginUtility_CheckMustReLogin(MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "ReLoginUtility_CheckMustReLogin");
+  return false;
+}
+
 void initApiMod() {
   GumInterceptor *interceptor = gum_interceptor_obtain();
 
@@ -80,5 +85,7 @@ void initApiMod() {
                           (void *)replacement_DownloadHandler_GetText, nullptr);
   gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(RequestBase_DecodeResultData),
                           (void *)replacement_RequestBase_DecodeResultData, nullptr);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(ReLoginUtility_CheckMustReLogin),
+                          (void *)replacement_ReLoginUtility_CheckMustReLogin, nullptr);
   gum_interceptor_end_transaction(interceptor);
 }

@@ -1,25 +1,11 @@
 #include "android-utils.h"
 #include "helpers.h"
-#include "il2cpp-appdata.h"
-#include <memory>
+#include "jni-utils.h"
 #include <string>
 
 using namespace app;
 
 std::string externalStoragePath;
-
-struct AndroidJavaObjectDisposer {
-  void operator()(AndroidJavaObject *obj) const { AndroidJavaObject__Dispose(obj, nullptr); }
-};
-
-using AndroidJavaObjectPtr = std::unique_ptr<AndroidJavaObject, AndroidJavaObjectDisposer>;
-
-AndroidJavaObjectPtr getUnityPlayerClass() {
-  AndroidJavaClass *unityPlayerClass =
-      (AndroidJavaClass *)il2cpp_object_new((Il2CppClass *)*AndroidJavaClass__TypeInfo);
-  AndroidJavaClass__ctor(unityPlayerClass, (String *)il2cpp_string_new("com.unity3d.player.UnityPlayer"), nullptr);
-  return AndroidJavaObjectPtr((AndroidJavaObject *)unityPlayerClass);
-}
 
 AndroidJavaObjectPtr getCurrentActivity(const AndroidJavaObjectPtr &unityPlayerClass) {
   return AndroidJavaObjectPtr(AndroidJavaObject_GetStatic_3(unityPlayerClass.get(),
@@ -48,7 +34,7 @@ String *getPathFromFilesDir(const AndroidJavaObjectPtr &filesDir) {
 }
 
 std::string getExternalFilesPathFromJNI() {
-  AndroidJavaObjectPtr unityPlayerClass = getUnityPlayerClass();
+  AndroidJavaObjectPtr unityPlayerClass = getJavaClass("com.unity3d.player.UnityPlayer");
   AndroidJavaObjectPtr activity = getCurrentActivity(unityPlayerClass);
   AndroidJavaObjectPtr context = getApplicationContext(activity);
   AndroidJavaObjectPtr filesDir = getExternalFilesDirFromContext(context);

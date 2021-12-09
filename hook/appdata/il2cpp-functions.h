@@ -18,7 +18,6 @@ DO_APP_FUNC(0x0181FC34, void, EnvironmentData_set_IsGZipCompress, (EnvironmentDa
 
 // LocalData
 DO_APP_FUNC(0x0098CD24, bool, LocalData_get_DisuseGooglePlayService, (LocalData * __this, MethodInfo * method));
-DO_APP_FUNC(0x0098CD14, Dictionary_2_System_String_System_Int32_ *, LocalData_get_DownloadedMovieVer, (LocalData * __this, MethodInfo * method));
 DO_APP_FUNC(0x0098CBF8, List_1_System_Int32_ *, LocalData_get_TutorialProgressData, (LocalData * __this, MethodInfo * method));
 DO_APP_FUNC(0x0098CC08, int32_t, LocalData_get_PartialTutorialData, (LocalData * __this, MethodInfo * method));
 
@@ -79,3 +78,25 @@ DO_APP_FUNC_METHODINFO(0x02F20B84, AndroidJavaObject_Call_3__MethodInfo);
 DO_APP_FUNC(0x01EA0034, void, AndroidJavaObject__Dispose, (AndroidJavaObject * __this, MethodInfo * method));
 DO_APP_FUNC(0x01D5A328, AndroidJavaObject *, AndroidJavaObject_GetStatic_3, (AndroidJavaObject * __this, String * fieldName, MethodInfo * method));
 DO_APP_FUNC_METHODINFO(0x02F1E44C, AndroidJavaObject_GetStatic_3__MethodInfo);
+DO_APP_FUNC(0x01D3B240, AndroidJavaObject *, AndroidJavaObject_CallStatic_2, (AndroidJavaObject * __this, String * methodName, Object__Array * args, MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F20B90, AndroidJavaObject_CallStatic_2__MethodInfo);
+DO_APP_FUNC(0x01D3B048, int32_t, AndroidJavaObject_Call_5, (AndroidJavaObject * __this, String * methodName, Object__Array * args, MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F20B78, AndroidJavaObject_Call_5__MethodInfo);
+
+// ReLoginUtility
+DO_APP_FUNC(0x00EA6838, bool, ReLoginUtility_CheckMustReLogin, (MethodInfo * method));
+
+// MDLoader3
+DO_APP_FUNC(0x00741950, MD_TowerSeasonList *, MDLoader3_c__LoadMain_b__21_47, (MDLoader3_c * __this, Byte__Array * sbfByteData, MethodInfo * method));
+DO_APP_FUNC(0x007485D4, MD_EventControlList *, MDLoader3_c__LoadMain_b__21_186, (MDLoader3_c * __this, Byte__Array * sbfByteData, MethodInfo * method));
+
+// MD_TowerSeason
+DO_APP_FUNC(0x019F42D4, String *, MD_TowerSeason_get_ID, (MD_TowerSeason * __this, MethodInfo * method));
+
+// DateTime
+DO_APP_FUNC(0x01B9B0EC, DateTime, DateTime_Parse, (String * s, MethodInfo * method));
+
+// MD_EventControl
+DO_APP_FUNC(0x01B0F518, String *, MD_EventControl_get_ID, (MD_EventControl * __this, MethodInfo * method));
+DO_APP_FUNC(0x01B0F634, String *, MD_EventControl_get_EventType, (MD_EventControl * __this, MethodInfo * method));
+DO_APP_FUNC(0x01B104C0, String *, MD_EventControl_get_Parameter3, (MD_EventControl * __this, MethodInfo * method));

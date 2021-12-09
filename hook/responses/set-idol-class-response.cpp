@@ -3,6 +3,7 @@
 #include "json.hpp"
 #include "login-response.h"
 #include "response-loader.h"
+#include "response-utils.h"
 #include <android/log.h>
 
 using json = nlohmann::json;
@@ -34,13 +35,5 @@ std::string getSetIdolClassResponse(ResponseLoaderContext *context, const json &
     return "";
   }
 
-  // clang-format off
-  json responseJson = {
-    {"np", 0},
-    {"tm", "2021-10-29 10:00:00"},
-    {"rt", 0}
-  };
-  // clang-format on
-
-  return responseJson.dump();
+  return getBaseResponse().dump();
 }

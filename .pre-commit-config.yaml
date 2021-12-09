@@ -14,6 +14,7 @@ repos:
     exclude: (?x)(
         ^hook/json.hpp$|
         ^hook/appdata|
+        ^hook/date|
         ^hook/frida-gum-devkit
       )
 - repo: https://github.com/editorconfig-checker/editorconfig-checker.python

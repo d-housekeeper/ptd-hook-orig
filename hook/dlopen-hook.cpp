@@ -4,6 +4,7 @@
 #include "helpers.h"
 #include "il2cpp-init.h"
 #include "local-data-mod.h"
+#include "md-mod.h"
 #include "string-utils.h"
 
 #include <android/log.h>
@@ -75,6 +76,7 @@ static void initAllHooks(DLOpenListener *self) {
   init_il2cpp();
   initApiMod();
   initLocalDataMod();
+  initMDMod();
   self->allHooksLoaded = true;
 }
 
