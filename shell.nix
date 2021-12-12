@@ -12,17 +12,16 @@ let
     ];
   };
   il2cppinspector = pkgs.callPackage ./il2cppinspector/default.nix { };
+  baksmali = pkgs.callPackage ./baksmali/default.nix { };
   ptd-tool = pkgs.callPackage ./ptd-tool/default.nix { };
   androidComposition = pkgs.androidenv.composeAndroidPackages {
     includeNDK = true;
     cmakeVersions = [ "3.18.1" ];
+    platformVersions = [ "31" ];
   };
   build-tools = pkgs.lib.head androidComposition.build-tools;
   cmake = pkgs.lib.head androidComposition.cmake;
-  customJRE = with pkgs; jre_minimal.override {
-    modules = [ "java.logging" ];
-    jdk = jdk11_headless;
-  };
+  gradlePackages = pkgs.callPackage (import "${sources.nixpkgs}/pkgs/development/tools/build-managers/gradle/default.nix") { };
 in
 pkgs.mkShell rec {
   ANDROID_SDK_ROOT = "${androidComposition.androidsdk}/libexec/android-sdk";
@@ -31,11 +30,13 @@ pkgs.mkShell rec {
   buildInputs = [
     il2cppinspector
     ptd-tool
-    customJRE
+    gradlePackages.gradle_7_3
+    baksmali
   ] ++ (with pkgs; [
     jq
     hashdeep
     apktool
+    jdk
   ]);
 
   shellHook = ''

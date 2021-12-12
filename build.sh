@@ -13,7 +13,17 @@ pushd ./out/cmake
 ninja
 popd
 
+gradle assembleRelease
+rm -rf ./out/app/
+baksmali d ./app/build/intermediates/dex/release/mergeDexRelease/classes.dex -o ./out/app/smali
+rm -rf ./out/apktool/smali/com/ptdhook/
+mkdir -p ./out/apktool/smali/com/ptdhook/
+cp ./out/app/smali/com/ptdhook/*.smali \
+  ./out/apktool/smali/com/ptdhook/
+rm ./out/apktool/smali/com/ptdhook/R*.smali
+
 cp -R ./smali/ ./out/apktool/
+cp -R ./res/ ./out/apktool/
 cp AndroidManifest.xml ./out/apktool/
 cp out/cmake/hook/libhook.so out/cmake/acd/lib__57d5__.so ./out/apktool/lib/armeabi-v7a/
 

@@ -96,6 +96,14 @@
         <meta-data android:name="unity.build-id" android:value="8e766985-0ee4-4282-a333-2fb8f89c5859"/>
         <meta-data android:name="unity.splash-mode" android:value="0"/>
         <meta-data android:name="unity.splash-enable" android:value="true"/>
+        <activity
+            android:name="com.ptdhook.SettingsActivity"
+            android:exported="false"
+            android:label="PTDHook Settings"
+            android:icon="@drawable/ic_stat_notify"
+            android:launchMode="singleInstance"
+            android:taskAffinity="com.ptdhook" />
+        <service android:enabled="true" android:name="com.ptdhook.NotificationService"></service>
     </application>
     <uses-feature android:glEsVersion="0x00020000"/>
     <uses-permission android:name="android.permission.VIBRATE"/>

@@ -5,6 +5,8 @@
 # instance fields
 .field protected mUnityPlayer:Lcom/unity3d/player/UnityPlayer;
 
+.field private mConnection:Lcom/ptdhook/NotificationService$NotificationServiceConnection;
+
 
 # direct methods
 .method static constructor <clinit>()V
@@ -395,6 +397,13 @@
 
     invoke-virtual {v0}, Lcom/unity3d/player/UnityPlayer;->start()V
 
+    # bind notification service
+    invoke-static {p0}, Lcom/ptdhook/NotificationService;->bindService(Landroid/app/Activity;)Lcom/ptdhook/NotificationService$NotificationServiceConnection;
+
+    move-result-object v0
+
+    iput-object v0, p0, Lcom/unity3d/player/UnityPlayerActivity;->mConnection:Lcom/ptdhook/NotificationService$NotificationServiceConnection;
+
     return-void
 .end method
 
@@ -412,6 +421,11 @@
     iget-object v0, p0, Lcom/unity3d/player/UnityPlayerActivity;->mUnityPlayer:Lcom/unity3d/player/UnityPlayer;
 
     invoke-virtual {v0}, Lcom/unity3d/player/UnityPlayer;->stop()V
+
+    # unbind notification service
+    iget-object v0, p0, Lcom/unity3d/player/UnityPlayerActivity;->mConnection:Lcom/ptdhook/NotificationService$NotificationServiceConnection;
+
+    invoke-virtual {p0, v0}, Lcom/unity3d/player/UnityPlayerActivity;->unbindService(Landroid/content/ServiceConnection;)V
 
     return-void
 .end method
