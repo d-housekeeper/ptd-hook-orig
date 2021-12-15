@@ -7,6 +7,7 @@
 #include "string-utils.h"
 #include <android/log.h>
 #include <functional>
+#include <random>
 #include <vector>
 
 using json = nlohmann::json;
@@ -15,62 +16,10 @@ using namespace app;
 using EnemyGroupList_GetData_Func = MD_EnemyGroup *(MD_EnemyGroupList *__this, String *id, MethodInfo *method);
 using IMD_Quest_Get_EnemyGroupID_Func = String *(IMD_Quest *__this, MethodInfo *method);
 
-static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Quest *quest);
 static std::vector<json> getPlayerQuestEnemies(List_1_MD_EnemyGroupHelper_WaveInfo_ *waveInfoList);
-
-static IMD_Quest *tryGetQuest(String *masterName, String *questID) {
-  // clang-format off
-  std::function<IMD_Quest*()> questLoaders[] = {
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetNormalEventQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetToubatsuEventQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetTouhaEventQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetRankingEventQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetPointEventQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetMultiEventQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetDamageEventQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetVoteEventQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      return (IMD_Quest *)MDManager_GetGirlLabyrinthQuest(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest * {
-      return (IMD_Quest *)MDManager_GetScenarioQuestFromMasterName(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest * {
-      return (IMD_Quest *)MDManager_GetRaidEventQuest_1(masterName, questID, nullptr);
-    },
-    [=]() -> IMD_Quest* {
-      MD_TowerQuestList *towerQuestList = (MD_TowerQuestList *)MDManager_GetData(MDType__Enum::TowerQuest, nullptr);
-      return (IMD_Quest *)MD_TowerQuestList_GetData(towerQuestList, questID, nullptr);
-    },
-  };
-  // clang-format on
-  size_t questLoaderCount = sizeof(questLoaders) / sizeof(questLoaders[0]);
-
-  for (int i = 0; i < questLoaderCount; ++i) {
-    IMD_Quest *quest = questLoaders[i]();
-    if (quest != nullptr) {
-      return quest;
-    }
-  }
-
-  return nullptr;
-}
+static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Quest *quest);
+static IMD_Quest *tryGetQuest(String *masterName, String *questID);
+static int getRandomNumber(int maxNumber);
 
 std::string getStartQuestResponse(ResponseLoaderContext *context, const nlohmann::json &requestJSON) {
   json::const_iterator masterNameIt = requestJSON.find("mn");
@@ -127,13 +76,18 @@ std::string getStartQuestResponse(ResponseLoaderContext *context, const nlohmann
 
 static std::vector<json> getPlayerQuestEnemies(List_1_MD_EnemyGroupHelper_WaveInfo_ *waveInfoList) {
   std::vector<json> enemies;
-  for (int k = 0; k < waveInfoList->_size; ++k) {
-    MD_EnemyGroupHelper_WaveInfo waveInfo = waveInfoList->_items->vector[k];
-    int j = 0;
+  std::srand(std::time(nullptr));
+  static std::minstd_rand eng{std::random_device{}()};
+
+  for (int j = 0; j < waveInfoList->_size; ++j) {
+    MD_EnemyGroupHelper_WaveInfo waveInfo = waveInfoList->_items->vector[j];
     if (waveInfo.LotEnemyList->_size < 1) {
       return std::vector<json>();
     }
-    MD_EnemyGroupHelper_WaveInfo_LotEnemy lotEnemy = waveInfo.LotEnemyList->_items->vector[j];
+    int lotEnemyIndex = getRandomNumber(waveInfo.LotEnemyList->_size - 1);
+    __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "lotEnemy(%d): %d/%d", j, lotEnemyIndex,
+                        waveInfo.LotEnemyList->_size);
+    MD_EnemyGroupHelper_WaveInfo_LotEnemy lotEnemy = waveInfo.LotEnemyList->_items->vector[lotEnemyIndex];
     std::vector<json> enemiesForWave;
     for (int i = 0; i < lotEnemy.EnemyIdList->_size; ++i) {
       String *enemyID = lotEnemy.EnemyIdList->_items->vector[i];
@@ -171,4 +125,64 @@ static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Ques
   MD_EnemyGroupHelper__ctor(enemyGroupHelper, enemyGroup, nullptr);
 
   return (List_1_MD_EnemyGroupHelper_WaveInfo_ *)MD_EnemyGroupHelper_get_WaveInfoList(enemyGroupHelper, nullptr);
+}
+
+static IMD_Quest *tryGetQuest(String *masterName, String *questID) {
+  // clang-format off
+  std::function<IMD_Quest*()> questLoaders[] = {
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetNormalEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetToubatsuEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetTouhaEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetRankingEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetPointEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetMultiEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetDamageEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetVoteEventQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      return (IMD_Quest *)MDManager_GetGirlLabyrinthQuest(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest * {
+      return (IMD_Quest *)MDManager_GetScenarioQuestFromMasterName(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest * {
+      return (IMD_Quest *)MDManager_GetRaidEventQuest_1(masterName, questID, nullptr);
+    },
+    [=]() -> IMD_Quest* {
+      MD_TowerQuestList *towerQuestList = (MD_TowerQuestList *)MDManager_GetData(MDType__Enum::TowerQuest, nullptr);
+      return (IMD_Quest *)MD_TowerQuestList_GetData(towerQuestList, questID, nullptr);
+    },
+  };
+  // clang-format on
+  size_t questLoaderCount = sizeof(questLoaders) / sizeof(questLoaders[0]);
+
+  for (int i = 0; i < questLoaderCount; ++i) {
+    IMD_Quest *quest = questLoaders[i]();
+    if (quest != nullptr) {
+      return quest;
+    }
+  }
+
+  return nullptr;
+}
+
+static int getRandomNumber(int maxNumber) {
+  static std::minstd_rand eng{std::random_device{}()};
+  std::uniform_int_distribution<int> dist{0, maxNumber};
+  return dist(eng);
 }
