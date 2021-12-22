@@ -43,7 +43,7 @@ static MD_EventControlList *replacement_MDLoader3_c__LoadMain_b__21_186(MDLoader
     std::string eventType = il2cppi_to_string(MD_EventControl_get_EventType(eventControl, nullptr));
     std::string parameter3 = il2cppi_to_string(MD_EventControl_get_Parameter3(eventControl, nullptr));
 
-    if (eventType == "Movie" && parameter3 == "Home") {
+    if (eventType == "Movie" && (parameter3 == "Home" || parameter3 == "Tower")) {
       DateTime dummyDate = DateTime_Parse((String *)il2cpp_string_new("01/01/3000 00:00:00"), nullptr);
       eventControl->_ReleaseDate = dummyDate;
       eventControl->_CloseDate = dummyDate;
