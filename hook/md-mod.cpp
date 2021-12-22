@@ -8,7 +8,7 @@ using namespace app;
 
 static MD_TowerSeasonList *replacement_MDLoader3_c__LoadMain_b__21_47(MDLoader3_c *__this, Byte__Array *sbfByteData,
                                                                       MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Modifying TowerSeason MD");
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Modifying TowerSeason MD to make one of them last forever");
   MD_TowerSeasonList *list = MDLoader3_c__LoadMain_b__21_47(__this, sbfByteData, method);
 
   for (int i = 0; i < list->_List->_size; i++) {
