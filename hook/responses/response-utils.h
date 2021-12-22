@@ -1,8 +1,9 @@
 #pragma once
 
 #include "json.hpp"
+#include "time-utils.h"
 #include <chrono>
 
-std::chrono::time_point<std::chrono::system_clock, std::chrono::seconds> getCurrentTime();
+sec_time_point getModifiedCurrentTime(const nlohmann::json &config);
 
 nlohmann::ordered_json getBaseResponse();

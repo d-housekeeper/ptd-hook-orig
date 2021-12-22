@@ -6,6 +6,7 @@
 #include "responses/set-favorite-character-response.h"
 #include "responses/set-idol-class-response.h"
 #include "responses/set-team-response.h"
+#include "responses/start-lesson-response.h"
 #include "responses/start-quest-response.h"
 #include "responses/stored-response.h"
 #include "string-utils.h"
@@ -32,13 +33,14 @@ std::string loadResponse(const std::string &apiName, const std::string &requestP
     return "";
   }
 
-  ResponseLoaderMap responseLoaders = {
+  static ResponseLoaderMap responseLoaders = {
       {"Login", getLoginResponse},
       {"EquipmentAvatar", getEquipmentAvatarResponse},
       {"SetFavoriteCharacter", getSetFavoriteCharacterResponse},
       {"SetIdolClass", getSetIdolClassResponse},
       {"SetTeam", getSetTeamResponse},
       {"StartQuest", getStartQuestResponse},
+      {"StartLesson", getStartLessonResponse},
   };
   std::string responsePM;
   ResponseLoaderMap::const_iterator responseLoaderIt = responseLoaders.find(apiName);

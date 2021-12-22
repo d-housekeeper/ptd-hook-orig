@@ -21,6 +21,7 @@ add_library(hook
   responses/set-favorite-character-response.cpp
   responses/set-idol-class-response.cpp
   responses/set-team-response.cpp
+  responses/start-lesson-response.cpp
   responses/start-quest-response.cpp
   responses/stored-response.cpp
   android-storage-path.cpp

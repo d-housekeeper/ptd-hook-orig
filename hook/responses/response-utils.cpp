@@ -10,8 +10,7 @@ using json = nlohmann::json;
 
 namespace chrono = std::chrono;
 
-nlohmann::ordered_json getBaseResponse() {
-  json config = loadConfigFromFile();
+sec_time_point getModifiedCurrentTime(const json &config) {
   std::string fakeTimeType;
   std::string fakeTimeValue;
   try {
@@ -51,13 +50,18 @@ nlohmann::ordered_json getBaseResponse() {
     __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Using current time");
   }
 
-  std::string formattedDate = date::format(strDateTimeFormat, now);
-  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "fakeTimeType: %s Current date: %s", fakeTimeType.c_str(),
-                      formattedDate.c_str());
+  return now;
+}
+
+nlohmann::ordered_json getBaseResponse() {
+  json config = loadConfigFromFile();
+  sec_time_point now = getModifiedCurrentTime(config);
+  std::string formattedDateTime = date::format(strDateTimeFormat, now);
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Current time: %s", formattedDateTime.c_str());
 
   return {
       {"np", 0},
-      {"tm", formattedDate},
+      {"tm", formattedDateTime},
       {"rt", 0},
   };
 }
