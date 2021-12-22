@@ -26,7 +26,7 @@ std::string loadResponse(const std::string &apiName, const std::string &requestP
   json requestJSON;
   try {
     requestJSON = json::parse(requestPM);
-    __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Request: %s", requestJSON.dump().c_str());
+    // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Request: %s", requestJSON.dump().c_str());
   } catch (json::exception &e) {
     __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to parse %s request: %s", apiName.c_str(), e.what());
     return "";
