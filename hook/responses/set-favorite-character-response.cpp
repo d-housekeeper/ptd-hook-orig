@@ -7,7 +7,6 @@
 #include <android/log.h>
 
 using json = nlohmann::json;
-using ordered_json = nlohmann::ordered_json;
 
 std::string getSetFavoriteCharacterResponse(ResponseLoaderContext *context, const json &requestJSON) {
   std::string characterID;
