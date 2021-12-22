@@ -12,6 +12,14 @@ using json = nlohmann::json;
 json defaultConfig = {
     {"fakeTimeType", "disabled"},
     {"fakeTimeValue", ""},
+    {"enableUIMod", false},
+    {"portraitHomeScene", false},
+    {"portraitMyRoomScene", false},
+    {"portraitPhotoModeScene", false},
+    {"hideHomeSceneUIElements", false},
+    {"hideMyRoomSceneUIElements", false},
+    {"adjustPortraitModeCameraPos", false},
+    {"cameraYPosOffset", 33},
 };
 
 void logUsingDefaultConfigMessage() { __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Using default config"); }
@@ -42,4 +50,28 @@ json loadConfigFromFile() {
 
   logUsingDefaultConfigMessage();
   return defaultConfig;
+}
+
+bool getBooleanConfigValue(const nlohmann::json &config, const char *configKey) {
+  bool value = false;
+  try {
+    value = config[configKey];
+  } catch (json::exception &e) {
+    __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Invalid boolean config value for %s: %s", configKey,
+                        e.what());
+  }
+
+  return value;
+}
+
+int getIntConfigValue(const nlohmann::json &config, const char *configKey, int defaultValue) {
+  int value = defaultValue;
+  try {
+    value = config[configKey];
+  } catch (json::exception &e) {
+    __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Invalid integer config value for %s: %s", configKey,
+                        e.what());
+  }
+
+  return value;
 }

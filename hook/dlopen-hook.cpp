@@ -1,11 +1,14 @@
 #include "android-utils.h"
 #include "api-mod.h"
+#include "config.h"
 #include "frida-gum.h"
+#include "game-initializer-mod.h"
 #include "helpers.h"
 #include "il2cpp-init.h"
 #include "local-data-mod.h"
 #include "md-mod.h"
 #include "string-utils.h"
+#include "ui-mod.h"
 
 #include <android/log.h>
 
@@ -72,11 +75,12 @@ static void dlopen_listener_class_init(DLOpenListenerClass *klass) {
 }
 
 static void initAllHooks(DLOpenListener *self) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Initializing all hooks");
+  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "initializing mods that don't require config file");
   init_il2cpp();
   initApiMod();
   initLocalDataMod();
   initMDMod();
+  initGameInitializerMod();
   self->allHooksLoaded = true;
 }
 

@@ -8,8 +8,10 @@ add_library(hook
   SHARED
   dlopen-hook.cpp
   api-mod.cpp
+  game-initializer-mod.cpp
   local-data-mod.cpp
   md-mod.cpp
+  ui-mod.cpp
   framework/helpers.cpp
   framework/il2cpp-init.cpp
   response-loader.cpp

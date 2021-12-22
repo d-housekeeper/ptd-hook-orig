@@ -1,6 +1,7 @@
 #include "android-utils.h"
 #include "helpers.h"
 #include "jni-utils.h"
+#include <android/log.h>
 #include <string>
 
 using namespace app;

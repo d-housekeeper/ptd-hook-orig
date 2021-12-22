@@ -100,3 +100,66 @@ DO_APP_FUNC(0x01B9B0EC, DateTime, DateTime_Parse, (String * s, MethodInfo * meth
 DO_APP_FUNC(0x01B0F518, String *, MD_EventControl_get_ID, (MD_EventControl * __this, MethodInfo * method));
 DO_APP_FUNC(0x01B0F634, String *, MD_EventControl_get_EventType, (MD_EventControl * __this, MethodInfo * method));
 DO_APP_FUNC(0x01B104C0, String *, MD_EventControl_get_Parameter3, (MD_EventControl * __this, MethodInfo * method));
+
+// SceneHomeTop
+DO_APP_FUNC(0x00A9EE0C, void, SceneHomeTop_MoveInAllUI, (SceneHomeTop * __this, MethodInfo * method));
+DO_APP_FUNC(0x00A9EEFC, void, SceneHomeTop_MoveOutAllUI, (SceneHomeTop * __this, MethodInfo * method));
+
+// CommuManager
+DO_APP_FUNC(0x00FE0F60, void, CommuManager_SetDisplayVertical, (CommuManager * __this, bool set, MethodInfo * method));
+
+// SystemBase_1_CommuManager_
+DO_APP_FUNC(0x020CD108, CommuManager *, SystemBase_1_CommuManager__get_Instance, (MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F3AB6C, SystemBase_1_CommuManager__get_Instance__MethodInfo);
+
+// ShootingUIShooting
+DO_APP_FUNC(0x00C6AF88, void, ShootingUIShooting_UIMoveInAll, (ShootingUIShooting * __this, MethodInfo * method));
+DO_APP_FUNC(0x00C6AE30, void, ShootingUIShooting_UIMoveOutAll, (ShootingUIShooting * __this, MethodInfo * method));
+
+// OutGameCameraManager
+DO_APP_FUNC(0x01146DF4, void, OutGameCameraManager_SetTargetPosition, (OutGameCameraManager * __this, Vector3 position, float fieldOfView, bool isMove, MethodInfo * method));
+DO_APP_FUNC(0x01142E58, void, OutGameCameraManager_set_ImmediatelyMove, (OutGameCameraManager * __this, bool value, MethodInfo * method));
+
+// SystemBase_1_OutGameCameraManager_
+DO_APP_FUNC(0x020CD108, OutGameCameraManager *, SystemBase_1_OutGameCameraManager__get_Instance, (MethodInfo * method));
+DO_APP_FUNC_METHODINFO(0x02F3ABBC, SystemBase_1_OutGameCameraManager__get_Instance__MethodInfo);
+
+// Component
+DO_APP_FUNC(0x01EAD08C, Transform *, Component_get_transform, (Component * __this, MethodInfo * method));
+DO_APP_FUNC(0x01EAD11C, GameObject *, Component_get_gameObject, (Component * __this, MethodInfo * method));
+
+// Camera
+DO_APP_FUNC(0x01EA8CF8, float, Camera_get_fieldOfView, (Camera * __this, MethodInfo * method));
+
+// Transform
+DO_APP_FUNC(0x0237EFEC, Vector3, Transform_get_position, (Transform * __this, MethodInfo * method));
+DO_APP_FUNC(0x023812AC, int32_t, Transform_get_childCount, (Transform * __this, MethodInfo * method));
+DO_APP_FUNC(0x02381904, Transform *, Transform_GetChild, (Transform * __this, int32_t index, MethodInfo * method));
+DO_APP_FUNC(0x02381628, Transform *, Transform_Find, (Transform * __this, String * n, MethodInfo * method));
+DO_APP_FUNC(0x02380590, void, Transform_Translate_2, (Transform * __this, float x, float y, float z, MethodInfo * method));
+
+// GameObject
+DO_APP_FUNC(0x01E79934, void, GameObject_SetActive, (GameObject * __this, bool value, MethodInfo * method));
+DO_APP_FUNC(0x01E79778, Transform *, GameObject_get_transform, (GameObject * __this, MethodInfo * method));
+
+// MoveUI2
+DO_APP_FUNC(0x00DC4290, void, MoveUI2_MoveIn, (MoveUI2 * __this, MethodInfo * method));
+DO_APP_FUNC(0x00DC42C4, void, MoveUI2_MoveOut, (MoveUI2 * __this, MethodInfo * method));
+
+// SceneMyroomTop_CoroutineCharaChange_d_46
+DO_APP_FUNC(0x00E8C5C8, bool, SceneMyroomTop_CoroutineCharaChange_d_46_MoveNext, (SceneMyroomTop_CoroutineCharaChange_d_46 * __this, MethodInfo * method));
+
+// SceneTitleRoot
+DO_APP_FUNC(0x00B22DD4, void, SceneTitleRoot_Initialize, (SceneTitleRoot * __this, MethodInfo * method));
+
+// MD_Character
+DO_APP_FUNC(0x01D9A40C, int32_t, MD_Character_get_Playable, (MD_Character * __this, MethodInfo * method));
+
+// SceneMyroomTop
+DO_APP_FUNC(0x00E89438, void, SceneMyroomTop_ChangeTopUIActive, (SceneMyroomTop * __this, ePlayableType__Enum playableType, MethodInfo * method));
+
+// SceneHomeTop_InitScene_d_29
+DO_APP_FUNC(0x00AA6398, bool, SceneHomeTop_InitScene_d_29_MoveNext, (SceneHomeTop_InitScene_d_29 * __this, MethodInfo * method));
+
+// SceneMyroomTop_InitScene_d_23
+DO_APP_FUNC(0x00E8D850, bool, SceneMyroomTop_InitScene_d_23_MoveNext, (SceneMyroomTop_InitScene_d_23 * __this, MethodInfo * method));
