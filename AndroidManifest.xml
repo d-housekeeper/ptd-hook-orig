@@ -98,7 +98,7 @@
         <meta-data android:name="unity.splash-enable" android:value="true"/>
         <activity
             android:name="com.ptdhook.SettingsActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="PTDHook Settings"
             android:icon="@drawable/ic_stat_notify"
             android:launchMode="singleInstance"
