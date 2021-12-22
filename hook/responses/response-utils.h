@@ -7,3 +7,5 @@
 sec_time_point getModifiedCurrentTime(const nlohmann::json &config);
 
 nlohmann::ordered_json getBaseResponse();
+
+int getRandomNumber(int maxNumber);

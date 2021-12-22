@@ -5,6 +5,7 @@
 #include "time-utils.h"
 #include <android/log.h>
 #include <chrono>
+#include <random>
 
 using json = nlohmann::json;
 
@@ -64,4 +65,10 @@ nlohmann::ordered_json getBaseResponse() {
       {"tm", formattedDateTime},
       {"rt", 0},
   };
+}
+
+int getRandomNumber(int maxNumber) {
+  static std::minstd_rand eng{std::random_device{}()};
+  std::uniform_int_distribution<int> dist{0, maxNumber};
+  return dist(eng);
 }

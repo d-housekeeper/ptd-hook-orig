@@ -7,7 +7,6 @@
 #include "string-utils.h"
 #include <android/log.h>
 #include <functional>
-#include <random>
 #include <vector>
 
 using json = nlohmann::json;
@@ -19,7 +18,6 @@ using IMD_Quest_Get_EnemyGroupID_Func = String *(IMD_Quest *__this, MethodInfo *
 static std::vector<json> getPlayerQuestEnemies(List_1_MD_EnemyGroupHelper_WaveInfo_ *waveInfoList);
 static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Quest *quest);
 static IMD_Quest *tryGetQuest(String *masterName, String *questID);
-static int getRandomNumber(int maxNumber);
 
 std::string getStartQuestResponse(ResponseLoaderContext *context, const nlohmann::json &requestJSON) {
   json::const_iterator masterNameIt = requestJSON.find("mn");
@@ -76,8 +74,6 @@ std::string getStartQuestResponse(ResponseLoaderContext *context, const nlohmann
 
 static std::vector<json> getPlayerQuestEnemies(List_1_MD_EnemyGroupHelper_WaveInfo_ *waveInfoList) {
   std::vector<json> enemies;
-  std::srand(std::time(nullptr));
-  static std::minstd_rand eng{std::random_device{}()};
 
   for (int j = 0; j < waveInfoList->_size; ++j) {
     MD_EnemyGroupHelper_WaveInfo waveInfo = waveInfoList->_items->vector[j];
@@ -179,10 +175,4 @@ static IMD_Quest *tryGetQuest(String *masterName, String *questID) {
   }
 
   return nullptr;
-}
-
-static int getRandomNumber(int maxNumber) {
-  static std::minstd_rand eng{std::random_device{}()};
-  std::uniform_int_distribution<int> dist{0, maxNumber};
-  return dist(eng);
 }
