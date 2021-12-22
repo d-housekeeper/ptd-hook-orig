@@ -18,6 +18,8 @@ add_library(hook
   responses/equipment-avatar-response.cpp
   responses/login-response.cpp
   responses/response-utils.cpp
+  responses/result-quest-response.cpp
+  responses/retire-quest-response.cpp
   responses/set-favorite-character-response.cpp
   responses/set-idol-class-response.cpp
   responses/set-team-response.cpp

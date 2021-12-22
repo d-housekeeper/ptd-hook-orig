@@ -3,6 +3,8 @@
 #include "helpers.h"
 #include "il2cpp-appdata.h"
 #include "json.hpp"
+#include "login-response.h"
+#include "response-loader.h"
 #include "response-utils.h"
 #include "string-utils.h"
 #include <android/log.h>
@@ -20,17 +22,19 @@ static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Ques
 static IMD_Quest *tryGetQuest(String *masterName, String *questID);
 
 std::string getStartQuestResponse(ResponseLoaderContext *context, const nlohmann::json &requestJSON) {
-  json::const_iterator masterNameIt = requestJSON.find("mn");
-  json::const_iterator questIDIt = requestJSON.find("qId");
-  if (masterNameIt == requestJSON.end() || questIDIt == requestJSON.end() || !(*masterNameIt).is_string() ||
-      !(*questIDIt).is_string()) {
-    __android_log_print(ANDROID_LOG_ERROR, androidLogTag,
-                        "StartQuest request missing required attributes, or its values are invalid (mn, qId)");
+  std::string inMasterName;
+  std::string inQuestID;
+  int inTeamNumber = 0;
+
+  try {
+    inMasterName = requestJSON["mn"];
+    inQuestID = requestJSON["qId"];
+    inTeamNumber = requestJSON["tn"];
+  } catch (json::exception &e) {
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Invalid StartQuest request: %s", e.what());
     return "";
   }
 
-  std::string inMasterName = *masterNameIt;
-  std::string inQuestID = *questIDIt;
   String *masterName = (String *)il2cpp_string_new(inMasterName.c_str());
   String *questID = (String *)il2cpp_string_new(inQuestID.c_str());
   __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Generating StartQuestResponse. masterName: %s questID: %s",
@@ -60,12 +64,33 @@ std::string getStartQuestResponse(ResponseLoaderContext *context, const nlohmann
     return "";
   }
 
+  const char *playQuestTempID = "12345678";
+  try {
+    // clang-format off
+    context->loginResponse["td"]["User"].merge_patch({
+      {"pQId", inQuestID},
+      {"pQNm", inMasterName},
+      {"pQTNm", inTeamNumber},
+      {"pqe", json(playerQuestEnemies).dump()},
+      {"pqTmp", playQuestTempID},
+    });
+    // clang-format on
+  } catch (json::exception &e) {
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to patch Login response with StartQuest: %s",
+                        e.what());
+    return "";
+  }
+
+  if (!saveLoginResponse(context)) {
+    return "";
+  }
+
   json responseJson = getBaseResponse();
   // clang-format off
   responseJson.merge_patch({
     {"rp", {
       {"pqe", playerQuestEnemies},
-      {"pqTmp", "12345678"}
+      {"pqTmp", playQuestTempID}
     }}
   });
   // clang-format on

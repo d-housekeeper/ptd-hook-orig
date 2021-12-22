@@ -8,3 +8,5 @@ struct ResponseLoaderContext;
 std::string getLoginResponse(ResponseLoaderContext *context, const nlohmann::json &requestJSON);
 
 bool saveLoginResponse(ResponseLoaderContext *context);
+
+void clearPlayQuestData(ResponseLoaderContext *context);

@@ -3,6 +3,8 @@
 #include "json.hpp"
 #include "responses/equipment-avatar-response.h"
 #include "responses/login-response.h"
+#include "responses/result-quest-response.h"
+#include "responses/retire-quest-response.h"
 #include "responses/set-favorite-character-response.h"
 #include "responses/set-idol-class-response.h"
 #include "responses/set-team-response.h"
@@ -40,6 +42,8 @@ std::string loadResponse(const std::string &apiName, const std::string &requestP
       {"SetIdolClass", getSetIdolClassResponse},
       {"SetTeam", getSetTeamResponse},
       {"StartQuest", getStartQuestResponse},
+      {"RetireQuest", getRetireQuestResponse},
+      {"ResultQuest", getResultQuestResponse},
       {"StartLesson", getStartLessonResponse},
   };
   std::string responsePM;

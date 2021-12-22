@@ -68,3 +68,15 @@ bool saveLoginResponse(ResponseLoaderContext *context) {
 
   return true;
 }
+
+void clearPlayQuestData(ResponseLoaderContext *context) {
+  // clang-format off
+  context->loginResponse["td"]["User"].merge_patch({
+    {"pQId", ""},
+    {"pQNm", " "},
+    {"pQTNm", " "},
+    {"pqe", "[]"},
+    {"pqTmp", " "},
+  });
+  // clang-format on
+}
