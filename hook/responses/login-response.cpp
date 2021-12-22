@@ -45,7 +45,7 @@ bool saveLoginResponse(ResponseLoaderContext *context) {
     out.open(tmpFileName);
     out << context->loginResponse.dump();
     out.close();
-  } catch (std::ifstream::failure e) {
+  } catch (std::ifstream::failure &e) {
     __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to write Login response to file at %s: %s",
                         fileName.c_str(), e.what());
     return false;

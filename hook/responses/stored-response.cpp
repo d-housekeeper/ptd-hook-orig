@@ -55,7 +55,7 @@ std::string loadResponsePmFromFile(const std::string &apiName) {
     t.open(fileName);
     buffer << t.rdbuf();
     t.close();
-  } catch (std::ifstream::failure e) {
+  } catch (std::ifstream::failure &e) {
     __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to read response file from %s: %s", fileName.c_str(),
                         e.what());
     return "";

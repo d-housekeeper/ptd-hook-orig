@@ -37,7 +37,7 @@ json loadConfigFromFile() {
     t.open(fileName);
     buffer << t.rdbuf();
     t.close();
-  } catch (std::ifstream::failure e) {
+  } catch (std::ifstream::failure &e) {
     __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Failed to read config file from %s: %s", fileName.c_str(),
                         e.what());
     logUsingDefaultConfigMessage();
