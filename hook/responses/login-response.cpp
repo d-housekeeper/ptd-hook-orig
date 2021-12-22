@@ -38,7 +38,7 @@ bool saveLoginResponse(ResponseLoaderContext *context) {
   std::string fileName = getResponsesPath().append("Login.json").string();
 
   std::ofstream out;
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Saving Login response to %s", fileName.c_str());
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Saving Login response to %s", fileName.c_str());
   std::chrono::steady_clock::time_point beginTime = std::chrono::steady_clock::now();
   try {
     out.exceptions(std::ifstream::failbit | std::ifstream::badbit);
@@ -63,7 +63,7 @@ bool saveLoginResponse(ResponseLoaderContext *context) {
   }
 
   std::chrono::steady_clock::time_point endTime = std::chrono::steady_clock::now();
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Saving Login response took %lldms",
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Saving Login response took %lldms",
                       std::chrono::duration_cast<std::chrono::milliseconds>(endTime - beginTime).count());
 
   return true;

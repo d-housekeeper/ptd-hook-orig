@@ -35,7 +35,7 @@ std::string getStartQuestResponse(ResponseLoaderContext *context, const nlohmann
   std::string inQuestID = *questIDIt;
   String *masterName = (String *)il2cpp_string_new(inMasterName.c_str());
   String *questID = (String *)il2cpp_string_new(inQuestID.c_str());
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Generating StartQuestResponse. masterName: %s questID: %s",
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Generating StartQuestResponse. masterName: %s questID: %s",
                       inMasterName.c_str(), inQuestID.c_str());
   IMD_Quest *quest = tryGetQuest(masterName, questID);
 
@@ -85,7 +85,7 @@ static std::vector<json> getPlayerQuestEnemies(List_1_MD_EnemyGroupHelper_WaveIn
       return std::vector<json>();
     }
     int lotEnemyIndex = getRandomNumber(waveInfo.LotEnemyList->_size - 1);
-    __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "lotEnemy(%d): %d/%d", j, lotEnemyIndex,
+    __android_log_print(ANDROID_LOG_INFO, androidLogTag, "lotEnemy(%d): %d/%d", j, lotEnemyIndex,
                         waveInfo.LotEnemyList->_size);
     MD_EnemyGroupHelper_WaveInfo_LotEnemy lotEnemy = waveInfo.LotEnemyList->_items->vector[lotEnemyIndex];
     std::vector<json> enemiesForWave;
@@ -115,7 +115,7 @@ static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Ques
                                                         (MethodInfo *)enemyGroupList->klass->vtable.GetData.method);
 
   if (enemyGroup == nullptr) {
-    __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Failed to get EnemyGroup by ID: %s",
+    __android_log_print(ANDROID_LOG_ERROR, androidLogTag, "Failed to get EnemyGroup by ID: %s",
                         stdEnemyGroupID.c_str());
     return nullptr;
   }

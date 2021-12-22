@@ -41,7 +41,7 @@ static String *replacement_UnityWebRequest_get_error(UnityWebRequest *__this, Me
 static RequestBase_ResponseParameter *replacement_RequestBase_DecodeResultData(RequestBase *__this, String *receiveData,
                                                                                MethodInfo *method) {
   std::string apiName = il2cppi_to_string(__this->_ApiName_k__BackingField);
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "RequestBase_DecodeResultData: %s", apiName.c_str());
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "RequestBase_DecodeResultData: %s", apiName.c_str());
 
   MethodInfo *tryGetValueMethod = (MethodInfo *)__this->_RequestPostParameter->klass->vtable.TryGetValue.method;
   String *pmKey = (String *)il2cpp_string_new("pm");
@@ -63,7 +63,7 @@ static RequestBase_ResponseParameter *replacement_RequestBase_DecodeResultData(R
 }
 
 bool replacement_ReLoginUtility_CheckMustReLogin(MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "ReLoginUtility_CheckMustReLogin");
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "ReLoginUtility_CheckMustReLogin");
   return false;
 }
 

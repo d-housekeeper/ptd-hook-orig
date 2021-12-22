@@ -31,10 +31,10 @@ G_DECLARE_FINAL_TYPE(DLOpenListener, dlopen_listener, DLOPEN, LISTENER, GObject)
 G_DEFINE_TYPE_EXTENDED(DLOpenListener, dlopen_listener, G_TYPE_OBJECT, 0,
                        G_IMPLEMENT_INTERFACE(GUM_TYPE_INVOCATION_LISTENER, dlopen_listener_iface_init))
 
-static void initAllHooks(DLOpenListener *self);
+static void initEssentialMods(DLOpenListener *self);
 
 void initDLOpenHook() {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Initializing dlopen hook");
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Initializing dlopen hook");
   GumInterceptor *interceptor = gum_interceptor_obtain();
   GumInvocationListener *listener =
       reinterpret_cast<GumInvocationListener *>(g_object_new(DLOPEN_TYPE_LISTENER, nullptr));
@@ -62,8 +62,7 @@ static void dlopen_listener_on_leave(GumInvocationListener *listener, GumInvocat
   }
 
   if (stringEndsWith(*op->loadedLibName, libName)) {
-    __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Initializing IL2CPP");
-    initAllHooks(self);
+    initEssentialMods(self);
     delete op->loadedLibName;
     op->loadedLibName = nullptr;
   }
@@ -74,8 +73,8 @@ static void dlopen_listener_class_init(DLOpenListenerClass *klass) {
   (void)glib_autoptr_cleanup_DLOpenListener;
 }
 
-static void initAllHooks(DLOpenListener *self) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "initializing mods that don't require config file");
+static void initEssentialMods(DLOpenListener *self) {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "initializing essential mods");
   init_il2cpp();
   initApiMod();
   initLocalDataMod();

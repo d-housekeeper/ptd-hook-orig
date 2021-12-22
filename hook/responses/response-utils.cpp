@@ -52,7 +52,7 @@ nlohmann::ordered_json getBaseResponse() {
   }
 
   std::string formattedDate = date::format(strDateTimeFormat, now);
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "fakeTimeType: %s Current date: %s", fakeTimeType.c_str(),
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "fakeTimeType: %s Current date: %s", fakeTimeType.c_str(),
                       formattedDate.c_str());
 
   return {

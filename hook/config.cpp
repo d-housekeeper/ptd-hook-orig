@@ -22,7 +22,7 @@ json defaultConfig = {
     {"cameraYPosOffset", 33},
 };
 
-void logUsingDefaultConfigMessage() { __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Using default config"); }
+void logUsingDefaultConfigMessage() { __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Using default config"); }
 
 json loadConfigFromFile() {
   fs::path p = fs::path(getExternalFilesDir()).append("ptd-hook-config.json");

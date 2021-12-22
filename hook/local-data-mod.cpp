@@ -31,6 +31,7 @@ List_1_System_Int32_ *replacement_LocalData_get_TutorialProgressData(LocalData *
 }
 
 void initLocalDataMod() {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Initializing Local data mod");
   GumInterceptor *interceptor = gum_interceptor_obtain();
 
   gum_interceptor_begin_transaction(interceptor);

@@ -33,9 +33,10 @@ namespace app {
 
 // IL2CPP application initializer
 void init_il2cpp() {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Initializing IL2CPP");
   // Get base address of IL2CPP module
   uintptr_t baseAddress = il2cppi_get_base_address();
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "il2cppi_get_base_address: 0x%08x", baseAddress);
+  // __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "il2cppi_get_base_address: 0x%08x", baseAddress);
 
   using namespace app;
 

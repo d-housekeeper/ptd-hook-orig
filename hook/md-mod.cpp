@@ -8,7 +8,7 @@ using namespace app;
 
 static MD_TowerSeasonList *replacement_MDLoader3_c__LoadMain_b__21_47(MDLoader3_c *__this, Byte__Array *sbfByteData,
                                                                       MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "MDLoader3_c__LoadMain_b__21_47");
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Modifying TowerSeason MD");
   MD_TowerSeasonList *list = MDLoader3_c__LoadMain_b__21_47(__this, sbfByteData, method);
 
   for (int i = 0; i < list->_List->_size; i++) {
@@ -35,7 +35,7 @@ static MD_TowerSeasonList *replacement_MDLoader3_c__LoadMain_b__21_47(MDLoader3_
 
 static MD_EventControlList *replacement_MDLoader3_c__LoadMain_b__21_186(MDLoader3_c *__this, Byte__Array *sbfByteData,
                                                                         MethodInfo *method) {
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "MDLoader3_c__LoadMain_b__21_186");
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Modifying EventControl MD to prevent movies from playing");
   MD_EventControlList *list = MDLoader3_c__LoadMain_b__21_186(__this, sbfByteData, method);
   for (int i = 0; i < list->_List->_size; i++) {
     MD_EventControl *eventControl = list->_List->_items->vector[i];
@@ -55,6 +55,7 @@ static MD_EventControlList *replacement_MDLoader3_c__LoadMain_b__21_186(MDLoader
 }
 
 void initMDMod() {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Initializing MD mod");
   GumInterceptor *interceptor = gum_interceptor_obtain();
 
   gum_interceptor_begin_transaction(interceptor);

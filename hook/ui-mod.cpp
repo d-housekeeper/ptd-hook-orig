@@ -13,6 +13,7 @@ static bool hideHomeSceneUIElementsEnabled =
     true; // Indicates whether hideHomeSceneUIElements is enabled when home scene is initialized
 
 static void forcePortraitMode() {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Forcing portrait mode");
   CommuManager *commuManager =
       SystemBase_1_CommuManager__get_Instance(*SystemBase_1_CommuManager__get_Instance__MethodInfo);
   CommuManager_eScenePlace__Enum oldScenePlace = commuManager->_ScenePlace;
@@ -22,6 +23,7 @@ static void forcePortraitMode() {
 }
 
 static void adjustPortraitModeCameraPos(const json &config) {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Adjusting camera pos for forced portrait mode");
   float baseCameraPosY = 133.0f;
   int cameraPosOffsetY = getIntConfigValue(config, "cameraPosOffsetY", 0);
 
@@ -32,9 +34,9 @@ static void adjustPortraitModeCameraPos(const json &config) {
   Transform *cameraTransform = Component_get_transform((Component *)camera, nullptr);
   Vector3 cameraPos = Transform_get_position(cameraTransform, nullptr);
   float fieldOfView = Camera_get_fieldOfView(camera, nullptr);
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "old cameraPos Y: %f", cameraPos.y);
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "old cameraPos Y: %f", cameraPos.y);
   cameraPos.y = baseCameraPosY - (float)cameraPosOffsetY;
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "new cameraPos Y: %f", cameraPos.y);
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "new cameraPos Y: %f", cameraPos.y);
 
   OutGameCameraManager_SetTargetPosition(cameraManager, cameraPos, fieldOfView, true, nullptr);
   OutGameCameraManager_set_ImmediatelyMove(cameraManager, true, nullptr);
@@ -45,6 +47,7 @@ static void hideHomeSceneUIElementsIfNeeded(const json &config, SceneHomeTop *sc
   if (!hideHomeSceneUIElementsEnabled) {
     return;
   }
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Hiding home scene UI elements");
 
   GameObject_SetActive(scene->_GlobalMenu->_GlobalHeader_k__BackingField->_StatusRoot, false, nullptr);
 
@@ -88,10 +91,13 @@ static void hideMyRoomSceneUIElementsIfNeeded(const json &config, SceneMyroomTop
   bool show = !getBooleanConfigValue(config, "hideMyRoomSceneUIElements");
 
   if (show) {
+    __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Showing my room scene UI elements again");
     int playableType = MD_Character_get_Playable(scene->_MD_Character, nullptr);
     SceneMyroomTop_ChangeTopUIActive(scene, (ePlayableType__Enum)playableType, nullptr);
     return;
   }
+
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Hiding my room scene UI elements");
 
   GameObject_SetActive(scene->_ScenePrefabMyroomTop->__MemoryButton_k__BackingField->__Root_k__BackingField, false,
                        nullptr);
@@ -209,7 +215,7 @@ void initScreenOrientationMod(const json &config) {
   if (!getBooleanConfigValue(config, "enableUIMod")) {
     return;
   }
-  __android_log_print(ANDROID_LOG_DEBUG, androidLogTag, "Initializing UI mod");
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Initializing UI mod");
 
   GumInterceptor *interceptor = gum_interceptor_obtain();
 
