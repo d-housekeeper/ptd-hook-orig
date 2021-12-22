@@ -62,7 +62,7 @@ static RequestBase_ResponseParameter *replacement_RequestBase_DecodeResultData(R
   return ret;
 }
 
-bool replacement_ReLoginUtility_CheckMustReLogin(MethodInfo *method) {
+static bool replacement_ReLoginUtility_CheckMustReLogin(MethodInfo *method) {
   __android_log_print(ANDROID_LOG_INFO, androidLogTag, "ReLoginUtility_CheckMustReLogin");
   return false;
 }

@@ -9,7 +9,7 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
-json defaultConfig = {
+static json defaultConfig = {
     {"fakeTimeType", "disabled"},
     {"fakeTimeValue", ""},
     {"enableUIMod", false},
@@ -22,7 +22,9 @@ json defaultConfig = {
     {"cameraYPosOffset", 33},
 };
 
-void logUsingDefaultConfigMessage() { __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Using default config"); }
+static void logUsingDefaultConfigMessage() {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Using default config");
+}
 
 json loadConfigFromFile() {
   fs::path p = fs::path(getExternalFilesDir()).append("ptd-hook-config.json");
