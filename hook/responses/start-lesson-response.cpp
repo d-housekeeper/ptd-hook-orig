@@ -34,7 +34,7 @@ std::string getStartLessonResponse(ResponseLoaderContext *context, const nlohman
         {characterID, {
           {"lsId", lessonID},
           {"ed", date::format(strDateTimeFormat, endTime)},
-          {"sc", 1},
+          {"sc", getRandomNumber(1)},
           {"exp", {
             {"A", 0},
             {"B", 0},
