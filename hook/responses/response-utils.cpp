@@ -11,6 +11,12 @@ using json = nlohmann::json;
 
 namespace chrono = std::chrono;
 
+void logInvalidValueError(const std::string &fakeTimeValue, const std::string &fakeTimeType, const std::exception &e) {
+  __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Invalid value \"%s\" for fakeTimeType %s: %s",
+                      fakeTimeValue.c_str(), fakeTimeType.c_str(), e.what());
+  __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Using current time");
+}
+
 sec_time_point getModifiedCurrentTime(const json &config) {
   std::string fakeTimeType;
   std::string fakeTimeValue;
@@ -36,19 +42,20 @@ sec_time_point getModifiedCurrentTime(const json &config) {
       chrono::duration timePart = now - datePart;
       now = floor<chrono::seconds>(days + timePart);
     } else if (fakeTimeType == "fixedYear") {
-      date::year_month_day inYMD;
-      is >> date::parse("%Y", inYMD);
+      int inYear = std::stoi(fakeTimeValue);
 
       date::year_month_day today{floor<date::days>(now)};
-      date::years yearDiff = date::years{inYMD.year() - today.year()};
+      date::years yearDiff = date::years{date::year{inYear} - today.year()};
       date::sys_days datePart = date::floor<date::days>(now);
       chrono::duration timePart = now - datePart;
       now = floor<chrono::seconds>(date::sys_days{today} + yearDiff + timePart);
     }
   } catch (std::istringstream::failure &e) {
-    __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Invalid value \"%s\" for fakeTimeType %s: %s",
-                        fakeTimeValue.c_str(), fakeTimeType.c_str(), e.what());
-    __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Using current time");
+    logInvalidValueError(fakeTimeValue, fakeTimeType, e);
+  } catch (std::invalid_argument &e) {
+    logInvalidValueError(fakeTimeValue, fakeTimeType, e);
+  } catch (std::out_of_range &e) {
+    logInvalidValueError(fakeTimeValue, fakeTimeType, e);
   }
 
   return now;
