@@ -31,6 +31,7 @@ sec_time_point getModifiedCurrentTime(const json &config) {
   std::istringstream is(fakeTimeValue);
   is.exceptions(std::istringstream::failbit | std::istringstream::badbit);
   sec_time_point now = getCurrentTime();
+  sec_time_point origNow = now;
   try {
     if (fakeTimeType == "fixedDateAndTime") {
       is >> date::parse(strDateTimeFormat, now);
@@ -56,6 +57,13 @@ sec_time_point getModifiedCurrentTime(const json &config) {
     logInvalidValueError(fakeTimeValue, fakeTimeType, e);
   } catch (std::out_of_range &e) {
     logInvalidValueError(fakeTimeValue, fakeTimeType, e);
+  }
+
+  date::year_month_day today{floor<date::days>(now)};
+  if (today.year() < date::year{2017}) {
+    __android_log_print(ANDROID_LOG_WARN, androidLogTag,
+                        "Year part must be at least 2017 or higher. Using current date instead");
+    return origNow;
   }
 
   return now;
