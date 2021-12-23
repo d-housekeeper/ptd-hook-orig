@@ -19,7 +19,7 @@ static MD_TowerSeasonList *replacement_MDLoader3_c__LoadMain_b__21_47(MDLoader3_
     std::string closeDate;
 
     if (stdSeasonID == "S202109xx") {
-      releaseDate = "06/22/2017 00:00:00";
+      releaseDate = "01/01/2000 00:00:00";
       closeDate = "01/01/3000 00:00:00";
     } else {
       releaseDate = "01/01/3000 00:00:00";
