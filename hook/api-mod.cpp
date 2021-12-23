@@ -67,6 +67,13 @@ static bool replacement_ReLoginUtility_CheckMustReLogin(MethodInfo *method) {
   return false;
 }
 
+static void
+replacement_ScenePrefabEventTopVote_WindowUI_VotePointUI_SetText(ScenePrefabEventTopVote_WindowUI_VotePointUI *__this,
+                                                                 ScenePrefabEventTopVote_WindowUI_Param *param,
+                                                                 MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "ScenePrefabEventTopVote_WindowUI_VotePointUI_SetText");
+}
+
 void initApiMod() {
   GumInterceptor *interceptor = gum_interceptor_obtain();
 
@@ -87,5 +94,7 @@ void initApiMod() {
                           (void *)replacement_RequestBase_DecodeResultData, nullptr);
   gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(ReLoginUtility_CheckMustReLogin),
                           (void *)replacement_ReLoginUtility_CheckMustReLogin, nullptr);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(ScenePrefabEventTopVote_WindowUI_VotePointUI_SetText),
+                          (void *)replacement_ScenePrefabEventTopVote_WindowUI_VotePointUI_SetText, nullptr);
   gum_interceptor_end_transaction(interceptor);
 }

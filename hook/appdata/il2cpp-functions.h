@@ -163,3 +163,6 @@ DO_APP_FUNC(0x00AA6398, bool, SceneHomeTop_InitScene_d_29_MoveNext, (SceneHomeTo
 
 // SceneMyroomTop_InitScene_d_23
 DO_APP_FUNC(0x00E8D850, bool, SceneMyroomTop_InitScene_d_23_MoveNext, (SceneMyroomTop_InitScene_d_23 * __this, MethodInfo * method));
+
+// ScenePrefabEventTopVote
+DO_APP_FUNC(0x011AA514, void, ScenePrefabEventTopVote_WindowUI_VotePointUI_SetText, (ScenePrefabEventTopVote_WindowUI_VotePointUI * __this, ScenePrefabEventTopVote_WindowUI_Param * param, MethodInfo * method));
