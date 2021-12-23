@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Gravity;
@@ -45,6 +46,7 @@ public class SettingsActivity extends Activity {
     };
     private static final int DEFAULT_CAMERA_POS_OFFSET_Y = 33;
 
+    private int mNextViewID;
     private LinearLayout mRootLayout;
     private boolean configLoaded = false;
     private Spinner mFakeTimeSpinner;
@@ -62,6 +64,7 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mNextViewID = 1;
         if (savedInstanceState != null) {
             configLoaded = true;
         }
@@ -73,7 +76,8 @@ public class SettingsActivity extends Activity {
         mRootLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(mRootLayout);
 
-        addTextViewToLayout("Fake time type");
+        addTextViewToLayout("Fake time mod settings");
+        addTextViewToLayout("Fake time type", true);
         mFakeTimeSpinner =
             addSpinnerToLayout(
                 FAKE_TIME_TYPES,
@@ -87,10 +91,14 @@ public class SettingsActivity extends Activity {
                     public void onNothingSelected(AdapterView<?> parent) {}
                 }
             );
-        addTextViewToLayout("Fake time value");
+        addTextViewToLayout("Fake time value", true);
         addFakeTimeValueEditTextToLayout();
 
+        addDividerToLayout();
+        addTextViewToLayout("Optional mods");
         mEnableUIModToggle = addToggleButtonToLayout("Enable UI mod (requires an app restart to take effect)");
+        addDividerToLayout();
+        addTextViewToLayout("UI mod settings");
         mEnableUIModToggle.setOnClickListener(l -> updateUIModViewsEnabled());
         mPortraitHomeSceneToggle = addToggleButtonToLayout("Force portrait mode in home scene");
         mPortraitMyRoomSceneToggle = addToggleButtonToLayout("Force portrait mode in my room scene");
@@ -103,7 +111,7 @@ public class SettingsActivity extends Activity {
         mHideMyRoomSceneUIElementsToggle = addToggleButtonToLayout("Hide my room scene UI elements");
         mAdjustPortraitModeCameraPosToggle = addToggleButtonToLayout("Adjust camera position in forced portrait mode");
         mAdjustPortraitModeCameraPosToggle.setOnClickListener(l -> updateCameraYPosEditTextEnabled());
-        addTextViewToLayout("camera Y position offset");
+        addTextViewToLayout("camera position offset Y", true);
         mCameraPosOffsetYEditText = addIntegerEditTextToLayout(DEFAULT_CAMERA_POS_OFFSET_Y);
 
         addSaveButtonToLayout();
@@ -346,10 +354,25 @@ public class SettingsActivity extends Activity {
     }
 
     private void addTextViewToLayout(String text) {
+        addTextViewToLayout(text, false);
+    }
+
+    private void addTextViewToLayout(String text, boolean addMargins) {
         TextView textView = new TextView(this);
         textView.setText(text);
         textView.setTextSize(TEXT_SIZE);
-        addViewToLayout(textView);
+        LinearLayout.LayoutParams params = null;
+
+        if (addMargins) {
+            params =
+                new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+            params.setMargins(10, 0, 10, 0);
+        }
+
+        addViewToLayout(textView, params);
     }
 
     @SuppressLint("SetTextI18n")
@@ -364,7 +387,9 @@ public class SettingsActivity extends Activity {
             LinearLayout.LayoutParams.WRAP_CONTENT,
             0.8f
         );
+        editTextLayoutParams.setMargins(5, 0, 5, 0);
         mFakeTimeValueEditText.setLayoutParams(editTextLayoutParams);
+        setIdToView(mFakeTimeValueEditText);
         layout.addView(mFakeTimeValueEditText);
 
         mPickFakeTimeButton = new Button(this);
@@ -378,6 +403,7 @@ public class SettingsActivity extends Activity {
         buttonLayoutParams.setMargins(5, 0, 5, 0);
         mPickFakeTimeButton.setLayoutParams(buttonLayoutParams);
         mPickFakeTimeButton.setOnClickListener(v -> openDatePickerDialog());
+        setIdToView(mPickFakeTimeButton);
         layout.addView(mPickFakeTimeButton);
 
         addViewToLayout(layout);
@@ -389,6 +415,7 @@ public class SettingsActivity extends Activity {
         CustomArrayAdapter fakeTimeTypeAdapter = new CustomArrayAdapter(items, TEXT_SIZE);
         spinner.setAdapter(fakeTimeTypeAdapter);
         spinner.setOnItemSelectedListener(l);
+        setIdToView(spinner);
         addViewToLayout(spinner);
 
         return spinner;
@@ -407,6 +434,7 @@ public class SettingsActivity extends Activity {
         );
         textViewLayoutParams.gravity = Gravity.FILL;
         textView.setLayoutParams(textViewLayoutParams);
+        setIdToView(textView);
         layout.addView(textView);
 
         ToggleButton button = new ToggleButton(this);
@@ -417,6 +445,7 @@ public class SettingsActivity extends Activity {
         );
         buttonLayoutParams.setMargins(5, 0, 5, 0);
         button.setLayoutParams(buttonLayoutParams);
+        setIdToView(button);
         layout.addView(button);
 
         layout.setPadding(10, 10, 10, 10);
@@ -431,6 +460,7 @@ public class SettingsActivity extends Activity {
         button.setText("Save");
         button.setTextSize(TEXT_SIZE);
         button.setOnClickListener(v -> saveConfig());
+        setIdToView(button);
         addViewToLayout(button);
     }
 
@@ -441,18 +471,45 @@ public class SettingsActivity extends Activity {
         editText.setText("" + value);
         editText.setTextSize(TEXT_SIZE);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(10, 0, 10, 0);
+        setIdToView(editText);
         addViewToLayout(editText);
 
         return editText;
     }
 
+    private void addDividerToLayout() {
+        View divider = new View(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
+        params.setMargins(0, 20, 0, 20);
+        divider.setLayoutParams(params);
+        divider.setBackgroundColor(Color.DKGRAY);
+
+        addViewToLayout(divider, params);
+    }
+
     private void addViewToLayout(View child) {
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(0, 5, 0, 5);
+        addViewToLayout(child, null);
+    }
+
+    private void addViewToLayout(View child, LinearLayout.LayoutParams params) {
+        if (params == null) {
+            params =
+                new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+            params.setMargins(0, 5, 0, 5);
+        }
         child.setLayoutParams(params);
         mRootLayout.addView(child);
+    }
+
+    private void setIdToView(View child) {
+        child.setId(++mNextViewID);
     }
 }
