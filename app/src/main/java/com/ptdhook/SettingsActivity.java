@@ -3,8 +3,17 @@ package com.ptdhook;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Icon;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Gravity;
@@ -60,6 +69,7 @@ public class SettingsActivity extends Activity {
     private ToggleButton mHideMyRoomSceneUIElementsToggle;
     private ToggleButton mAdjustPortraitModeCameraPosToggle;
     private EditText mCameraPosOffsetYEditText;
+    private Resources.Theme mTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +78,20 @@ public class SettingsActivity extends Activity {
         if (savedInstanceState != null) {
             configLoaded = true;
         }
-        int themeID = getResources().getIdentifier("Theme.PTDHook", "style", getPackageName());
+        Resources resources = getResources();
+        int themeID = resources.getIdentifier("Theme.PTDHook", "style", getPackageName());
         setTheme(themeID);
+        mTheme = resources.newTheme();
+        mTheme.applyStyle(themeID, true);
         ScrollView scrollView = new ScrollView(this);
         mRootLayout = new LinearLayout(this);
         mRootLayout.setPadding(50, 10, 50, 10);
         mRootLayout.setOrientation(LinearLayout.VERTICAL);
         scrollView.addView(mRootLayout);
+
+        addTextViewToLayout("Shortcuts");
+        addButtonToLayout("Add a shortcut to home screen", l -> createShortcut());
+        addDividerToLayout();
 
         addTextViewToLayout("Fake time mod settings");
         addTextViewToLayout("Fake time type", true);
@@ -114,7 +131,7 @@ public class SettingsActivity extends Activity {
         addTextViewToLayout("camera position offset Y", true);
         mCameraPosOffsetYEditText = addIntegerEditTextToLayout(DEFAULT_CAMERA_POS_OFFSET_Y);
 
-        addSaveButtonToLayout();
+        addButtonToLayout("Save", l -> saveConfig());
         loadConfig();
         setContentView(scrollView);
     }
@@ -353,6 +370,40 @@ public class SettingsActivity extends Activity {
         }
     }
 
+    private void createShortcut() {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+            if (!shortcutManager.isRequestPinShortcutSupported()) {
+                Toast
+                    .makeText(this, "Your launcher does not support requesting pin shortcut", Toast.LENGTH_LONG)
+                    .show();
+                return;
+            }
+
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(getPackageName(), SettingsActivity.class.getCanonicalName()));
+            intent.setAction("LOCATION_SHORTCUT");
+            Resources resources = getResources();
+            int drawableID = resources.getIdentifier("ic_stat_notify", "drawable", getPackageName());
+            @SuppressLint("UseCompatLoadingForDrawables")
+            BitmapDrawable drawable = (BitmapDrawable) resources.getDrawable(drawableID, mTheme);
+            Icon icon = Icon.createWithBitmap(drawable.getBitmap());
+            ShortcutInfo pinShortcutInfo = new ShortcutInfo.Builder(this, "PTDHookSettings")
+                .setShortLabel("PTDHook Settings")
+                .setIntent(intent)
+                .setIcon(icon)
+                .build();
+            Intent pinnedShortcutCallbackIntent = shortcutManager.createShortcutResultIntent(pinShortcutInfo);
+            PendingIntent successCallback = PendingIntent.getBroadcast(this, 0, pinnedShortcutCallbackIntent, 0);
+
+            shortcutManager.requestPinShortcut(pinShortcutInfo, successCallback.getIntentSender());
+        } else {
+            Toast
+                .makeText(this, "Shortcut creation is only supported on Android 8.0 or later", Toast.LENGTH_LONG)
+                .show();
+        }
+    }
+
     private void addTextViewToLayout(String text) {
         addTextViewToLayout(text, false);
     }
@@ -455,13 +506,17 @@ public class SettingsActivity extends Activity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void addSaveButtonToLayout() {
+    private void addButtonToLayout(String text, View.OnClickListener l) {
         Button button = new Button(this);
-        button.setText("Save");
-        button.setTextSize(TEXT_SIZE);
-        button.setOnClickListener(v -> saveConfig());
+        button.setText(text);
+        button.setOnClickListener(l);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(10, 0, 10, 0);
         setIdToView(button);
-        addViewToLayout(button);
+        addViewToLayout(button, params);
     }
 
     @SuppressWarnings("SameParameterValue")
