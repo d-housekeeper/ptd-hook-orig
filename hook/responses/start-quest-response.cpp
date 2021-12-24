@@ -142,7 +142,7 @@ static List_1_MD_EnemyGroupHelper_WaveInfo_ *getWaveInfoListFromMDQuest(IMD_Ques
   }
 
   MD_EnemyGroupHelper *enemyGroupHelper =
-      (MD_EnemyGroupHelper *)il2cpp_object_new((Il2CppClass *)*MD_EnemyGroupList__TypeInfo);
+      (MD_EnemyGroupHelper *)il2cpp_object_new((Il2CppClass *)*MD_EnemyGroupHelper__TypeInfo);
   MD_EnemyGroupHelper__ctor(enemyGroupHelper, enemyGroup, nullptr);
 
   return (List_1_MD_EnemyGroupHelper_WaveInfo_ *)MD_EnemyGroupHelper_get_WaveInfoList(enemyGroupHelper, nullptr);
