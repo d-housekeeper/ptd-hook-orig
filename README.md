@@ -38,6 +38,7 @@ Alternatively you can add shortcut to home screen from this activity, to easily 
 ## What does this mod do internally?
 
 * Installs hooks to disable all requests with `UnityWebRequest` wrapper class used by the game, and replaces responses with ones stored in internal storage. Server time and some other fields are added to the response by the mod automatically.
+  * For some API endpoints, the hook generates response content dynamically and patches Login response to persist changes.
 * Removes network permission from AndroidManifest.xml to prevent any attempts of network connection.
 * Disables anti cheat library embedded in the apk by replacing it with dummy one. This only works with this specific version of PTD, as the antiCheatValues changed between releases of the app. It will probably not work on other apps either. I will not write how I got those values, because that might make disabling cheat detection on other games easier. (Other games might be using more sophisticated cheat detection techniques and can't be disabled in the same way, I just don't know.)
 * Overrides some of local data fields to trick the app into believing that you already have player data locally.
@@ -109,7 +110,7 @@ Run this command to build C++ libraries and modded apk.
 Replace `~/path/to/release-key.keystore` with actual path of key store.
 
 ```
-KEYSTORE_FILE=~/path/to/release-key.keystore ./build-apk.sh
+KEYSTORE_FILE=~/path/to/release-key.keystore ./build.sh
 ```
 
 ## Installing with modded APK
@@ -168,7 +169,7 @@ You can launch the app using adb with `./launch-activity.sh`.
 
 See `LICENSE` file.
 
-Basically the license allows everything, but please don't do nonsense things and use your common sense.
+Basically the license allows everything, but please don't do nonsense. Use your common sense.
 Forking and improving this mod or using non-PTD specific part as a base for another IL2CPP based game mod is totally fine.
 
 frida-gum is licensed under wxWindows Library Licence. https://github.com/frida/frida-gum/blob/main/COPYING
