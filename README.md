@@ -9,19 +9,42 @@ With this mod, you can
 
 * interact with dolls on home screen and in their room
 * read stories
-* set dolls' classes/clothes
-* watching dolls' skill animation
+* set characters' classes/clothes
+* watching characters' skill animation
 * play quests (battles)
 
-Changes to user data is lost after restart, because the mod does not do anything for storing changes. What it does is simply returning HTTP response stored in internal storage (Except for StartQuest response).
+Only following changes to user data persists after restart. Everything else will get lost after restarting the app.
+
+* Favorite character (お気に入り)
+* Costumes currently characters are wearing  (着せ替え)
+* Teams (パーティ編成)
+* Interrupted quest data
+
+The mod also adds additional features that didn't exist even in original version of the app.
+
+* Setting a different time than current time. Useful for listening to interaction voices that are only available for limited time.
+  * Many of past event stories and quests don't work correctly. Might still be useful for viewing illusts of past events. If you just want to read stories of past events, try finding one in reminiscence (回想).
+  * By default current time and time zone of the device is used.
+* Forcing portrait mode in home scene, my room scene (女子寮), and photo mode scene (撮影モード). Useful for seeing costume design for lower part of body without switching to view mode.
+  * Some of UI elements can be hidden for those scenes as well.
+
+## PTDHook Settings activity
+
+The mod creates an ongoing notification, which is accessible only when the app is in foreground. Tapping the notification opens mod settings in another Android activity. Additional mod features we described above can be toggled/tweaked from this activity.
+
+If you don't want the notification to show up, just disable the notification from Android settings.
+Alternatively you can add shortcut to home screen from this activity, to easily access settings without tapping notification. (Only works on Android 8.0+)
 
 ## What does this mod do internally?
 
-* Installs hooks to disable all requests with `UnityWebRequest` wrapper class used by the game, and replaces responses with ones stored in internal storage.
-* Network permission is removed from AndroidManifest.xml to prevent any attempts of network connection.
+* Installs hooks to disable all requests with `UnityWebRequest` wrapper class used by the game, and replaces responses with ones stored in internal storage. Server time and some other fields are added to the response by the mod automatically.
+* Removes network permission from AndroidManifest.xml to prevent any attempts of network connection.
 * Disables anti cheat library embedded in the apk by replacing it with dummy one. This only works with this specific version of PTD, as the antiCheatValues changed between releases of the app. It will probably not work on other apps either. I will not write how I got those values, because that might make disabling cheat detection on other games easier. (Other games might be using more sophisticated cheat detection techniques and can't be disabled in the same way, I just don't know.)
 * Overrides some of local data fields to trick the app into believing that you already have player data locally.
 * Prevents `sign in to Google` activity from showing up when you launch the app for the first time.
+* Prevents movies from being downloaded. Movies will get deleted after playing, so it won't exist on your disk even if you downloaded all assets before service shutdown.
+* Modifies Shinjuku Naraku event data to prevent it from expiring. (Expired Shinjuku Naraku event causes the app to crash)
+* Skips initialization of some event details to avoid crashes after changing to event details scene.
 * Creates modded apk to install those modified/added files. Re-installing the apk with different signing key also prevents updates from showing up on Google Play.
 
 ## Prerequisites
@@ -129,8 +152,6 @@ Then run `./generate-responses.sh` to generate login response in temporary direc
 
 To send generated responses to Android device, use `./install-responses.sh`.
 
-NOTE: `./install-responses.sh` may fail on devices running Android 11+, as the OS no longer seem to allow pushing to this data directory directly with adb. Copying responses to a different directory and then moving them to the data directory might work, though I haven't tested that yet. On Android 10 and lower the script should work as expected.
-
 ```
 ./install-responses.sh
 ```
@@ -142,3 +163,13 @@ You can launch the app using adb with `./launch-activity.sh`.
 ```
 ./launch-activity.sh
 ```
+
+## Licensing
+
+See `LICENSE` file.
+
+Basically the license allows everything, but please don't do nonsense things and use your common sense.
+Forking and improving this mod or using non-PTD specific part as a base for another IL2CPP based game mod is totally fine.
+
+frida-gum is licensed under wxWindows Library Licence. https://github.com/frida/frida-gum/blob/main/COPYING
+For other header only libraries, see the beginning of file for the license.
