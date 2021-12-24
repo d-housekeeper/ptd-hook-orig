@@ -23,7 +23,7 @@ Only following changes to user data persists after restart. Everything else will
 The mod also adds additional features that didn't exist even in original version of the app.
 
 * Setting a different time than current time. Useful for listening to interaction voices that are only available for limited time.
-  * Many of past event stories and quests don't work correctly. Might still be useful for viewing illusts of past events. If you just want to read stories of past events, try finding one in reminiscence (回想).
+  * Many of past event stories and quests don't work correctly. Might still be useful for viewing illusts of past events. If you just want to read stories of past events, try finding one in story reminiscence (ストーリー回想).
   * By default current time and time zone of the device is used.
 * Forcing portrait mode in home scene, my room scene (女子寮), and photo mode scene (撮影モード). Useful for seeing costume design for lower part of body without switching to view mode.
   * Some of UI elements can be hidden for those scenes as well.
