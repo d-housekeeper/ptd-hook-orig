@@ -3,7 +3,6 @@ package com.ptdhook;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -412,9 +411,8 @@ public class SettingsActivity extends Activity {
                 .setIcon(icon)
                 .build();
             Intent pinnedShortcutCallbackIntent = shortcutManager.createShortcutResultIntent(pinShortcutInfo);
-            PendingIntent successCallback = PendingIntent.getBroadcast(this, 0, pinnedShortcutCallbackIntent, 0);
 
-            shortcutManager.requestPinShortcut(pinShortcutInfo, successCallback.getIntentSender());
+            shortcutManager.requestPinShortcut(pinShortcutInfo, null);
         } else {
             Toast
                 .makeText(this, "Shortcut creation is only supported on Android 8.0 or later", Toast.LENGTH_LONG)
