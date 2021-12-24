@@ -62,7 +62,7 @@ sec_time_point getModifiedCurrentTime(const json &config) {
   date::year_month_day today{floor<date::days>(now)};
   if (today.year() < date::year{2017}) {
     __android_log_print(ANDROID_LOG_WARN, androidLogTag,
-                        "Year part must be at least 2017 or higher. Using current date instead");
+                        "Year part must be 2017 or higher. Using current date instead");
     return origNow;
   }
 
