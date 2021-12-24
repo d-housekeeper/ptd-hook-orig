@@ -166,3 +166,12 @@ DO_APP_FUNC(0x00E8D850, bool, SceneMyroomTop_InitScene_d_23_MoveNext, (SceneMyro
 
 // ScenePrefabEventTopVote
 DO_APP_FUNC(0x011AA514, void, ScenePrefabEventTopVote_WindowUI_VotePointUI_SetText, (ScenePrefabEventTopVote_WindowUI_VotePointUI * __this, ScenePrefabEventTopVote_WindowUI_Param * param, MethodInfo * method));
+
+// RankingListAPIManager
+DO_APP_FUNC(0x00E96040, void, RankingListAPIManager_OnDownloadRankingCompleted, (RankingListAPIManager * __this, String * fileName, MethodInfo * method));
+
+// RankingListAPIManager
+DO_APP_FUNC(0x00E958F4, String *, RankingListAPIManager_get_RankingDirectory, (MethodInfo * method));
+
+// SceneEventTopBase_InitTradeList_d_67
+DO_APP_FUNC(0x009AC398, bool, SceneEventTopBase_InitTradeList_d_67_MoveNext, (SceneEventTopBase_InitTradeList_d_67 * __this, MethodInfo * method));
