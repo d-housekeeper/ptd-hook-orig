@@ -2,7 +2,6 @@
 #include "android-storage-path.h"
 #include "android-utils.h"
 #include "response-utils.h"
-#include "string-utils.h"
 #include <android/log.h>
 #include <filesystem>
 #include <fstream>
@@ -45,7 +44,7 @@ std::string getStoredResponse(const std::string &apiName) {
 }
 
 std::string loadResponsePmFromFile(const std::string &apiName) {
-  std::string baseName = string_format("%s.json", apiName.c_str());
+  std::string baseName = apiName + ".json";
   std::string fileName = getResponsesPath().append(baseName).string();
 
   std::ifstream t;

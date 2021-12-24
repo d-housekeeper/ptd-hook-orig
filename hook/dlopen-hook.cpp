@@ -7,7 +7,6 @@
 #include "il2cpp-init.h"
 #include "local-data-mod.h"
 #include "md-mod.h"
-#include "string-utils.h"
 #include "ui-mod.h"
 
 #include <android/log.h>
@@ -61,7 +60,7 @@ static void dlopen_listener_on_leave(GumInvocationListener *listener, GumInvocat
     return;
   }
 
-  if (stringEndsWith(*op->loadedLibName, libName)) {
+  if (op->loadedLibName->ends_with(libName)) {
     initEssentialMods(self);
     delete op->loadedLibName;
     op->loadedLibName = nullptr;

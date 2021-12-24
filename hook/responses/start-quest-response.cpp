@@ -6,7 +6,6 @@
 #include "login-response.h"
 #include "response-loader.h"
 #include "response-utils.h"
-#include "string-utils.h"
 #include <android/log.h>
 #include <functional>
 #include <vector>

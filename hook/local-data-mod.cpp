@@ -1,7 +1,6 @@
 #include "android-utils.h"
 #include "frida-gum.h"
 #include "il2cpp-appdata.h"
-#include "string-utils.h"
 #include <android/log.h>
 
 using namespace app;

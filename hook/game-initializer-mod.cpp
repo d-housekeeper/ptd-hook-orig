@@ -4,7 +4,6 @@
 #include "config.h"
 #include "frida-gum.h"
 #include "il2cpp-appdata.h"
-#include "string-utils.h"
 #include "time-utils.h"
 #include "ui-mod.h"
 #include <android/log.h>

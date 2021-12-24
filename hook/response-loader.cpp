@@ -11,7 +11,6 @@
 #include "responses/start-lesson-response.h"
 #include "responses/start-quest-response.h"
 #include "responses/stored-response.h"
-#include "string-utils.h"
 #include <android/log.h>
 #include <filesystem>
 #include <fstream>
