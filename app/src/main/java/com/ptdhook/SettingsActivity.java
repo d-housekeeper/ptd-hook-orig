@@ -70,6 +70,7 @@ public class SettingsActivity extends Activity {
     private ToggleButton mAdjustPortraitModeCameraPosToggle;
     private EditText mCameraPosOffsetYEditText;
     private Resources.Theme mTheme;
+    private String mOldFakeTimeType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class SettingsActivity extends Activity {
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        updateFakeTimeViewsEnabled();
+                        updateFakeTimeViews();
                     }
 
                     @Override
@@ -136,14 +137,31 @@ public class SettingsActivity extends Activity {
         setContentView(scrollView);
     }
 
-    private void updateFakeTimeViewsEnabled() {
+    private void updateFakeTimeViews() {
         String fakeTimeType = (String) mFakeTimeSpinner.getSelectedItem();
         boolean fakeTimeEnabled = !fakeTimeType.equals("disabled");
         mFakeTimeValueEditText.setEnabled(fakeTimeEnabled);
         mPickFakeTimeButton.setEnabled(fakeTimeEnabled);
         try {
             mFakeTimeValueEditText.setText(getNormalizedFakeTimeValue());
-        } catch (ParseException ignored) {}
+        } catch (ParseException ignored) {
+            reformatFakeTimeValue(fakeTimeType);
+        }
+        mOldFakeTimeType = fakeTimeType;
+    }
+
+    private void reformatFakeTimeValue(String fakeTimeType) {
+        SimpleDateFormat format = getSimpleDateFormatFromFakeTimeType(mOldFakeTimeType);
+        SimpleDateFormat newFormat = getSimpleDateFormatFromFakeTimeType(fakeTimeType);
+        if (format != null && newFormat != null) {
+            String fakeTimeValue = mFakeTimeValueEditText.getText().toString();
+            try {
+                Date fakeTimeDate = format.parse(fakeTimeValue);
+                //noinspection ConstantConditions
+                fakeTimeValue = newFormat.format(fakeTimeDate);
+                mFakeTimeValueEditText.setText(fakeTimeValue);
+            } catch (ParseException ignored) {}
+        }
     }
 
     private void updateUIModViewsEnabled() {
@@ -170,7 +188,7 @@ public class SettingsActivity extends Activity {
         String fakeTimeValue = mFakeTimeValueEditText.getText().toString();
         Calendar cal = Calendar.getInstance();
         String fakeTimeType = mFakeTimeSpinner.getSelectedItem().toString();
-        SimpleDateFormat format = getSimpleDateFormatFromFakeTimeType();
+        SimpleDateFormat format = getSimpleDateFormatFromFakeTimeType((String) mFakeTimeSpinner.getSelectedItem());
         if (format != null) {
             try {
                 //noinspection ConstantConditions
@@ -264,7 +282,7 @@ public class SettingsActivity extends Activity {
         } catch (FileNotFoundException ignored) {} catch (JSONException | IOException e) {
             Toast.makeText(this, "Failed to load config from file: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
-        updateFakeTimeViewsEnabled();
+        updateFakeTimeViews();
         updateUIModViewsEnabled();
     }
 
@@ -272,8 +290,8 @@ public class SettingsActivity extends Activity {
         button.setChecked((value instanceof Boolean) ? (Boolean) value : false);
     }
 
-    private SimpleDateFormat getSimpleDateFormatFromFakeTimeType() {
-        switch ((String) mFakeTimeSpinner.getSelectedItem()) {
+    private SimpleDateFormat getSimpleDateFormatFromFakeTimeType(String fakeTimeType) {
+        switch (fakeTimeType) {
             case "fixedDateAndTime":
                 return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
             case "fixedDate":
@@ -287,7 +305,7 @@ public class SettingsActivity extends Activity {
 
     private String getNormalizedFakeTimeValue() throws ParseException {
         String fakeTimeValue = mFakeTimeValueEditText.getText().toString();
-        SimpleDateFormat format = getSimpleDateFormatFromFakeTimeType();
+        SimpleDateFormat format = getSimpleDateFormatFromFakeTimeType((String) mFakeTimeSpinner.getSelectedItem());
         if (format != null) {
             Date fakeTimeDate = format.parse(fakeTimeValue);
             //noinspection ConstantConditions
@@ -304,7 +322,7 @@ public class SettingsActivity extends Activity {
             mFakeTimeValueEditText.clearFocus();
             mFakeTimeValueEditText.setTextKeepState(getNormalizedFakeTimeValue());
         } catch (ParseException e) {
-            SimpleDateFormat format = getSimpleDateFormatFromFakeTimeType();
+            SimpleDateFormat format = getSimpleDateFormatFromFakeTimeType((String) mFakeTimeSpinner.getSelectedItem());
             //noinspection ConstantConditions
             mFakeTimeValueEditText.setError("The value must be in format " + format.toPattern());
             mFakeTimeValueEditText.requestFocus();
