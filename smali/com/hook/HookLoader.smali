@@ -46,6 +46,7 @@
     const-string v0, "hook"
 
     invoke-static {v0}, Ljava/lang/System;->loadLibrary(Ljava/lang/String;)V
+    invoke-static {}, Lcom/hook/HookLoader;->initHook()V
 
     .line 10
     const/4 v0, 0x1
