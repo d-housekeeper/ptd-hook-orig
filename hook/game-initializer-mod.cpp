@@ -11,6 +11,10 @@
 using namespace app;
 using json = nlohmann::json;
 
+static void replacement_AllNotificationManager_Initialize(MethodInfo *method) {
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "AllNotificationManager_Initialize");
+}
+
 static void replacement_SceneTitleRoot_Initialize(SceneTitleRoot *__this, MethodInfo *method) {
   SceneTitleRoot_Initialize(__this, method);
 
@@ -34,6 +38,8 @@ void initGameInitializerMod() {
   GumInterceptor *interceptor = gum_interceptor_obtain();
 
   gum_interceptor_begin_transaction(interceptor);
+  gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(AllNotificationManager_Initialize),
+                          (void *)replacement_AllNotificationManager_Initialize, nullptr);
   gum_interceptor_replace(interceptor, GSIZE_TO_POINTER(SceneTitleRoot_Initialize),
                           (void *)replacement_SceneTitleRoot_Initialize, nullptr);
   gum_interceptor_end_transaction(interceptor);

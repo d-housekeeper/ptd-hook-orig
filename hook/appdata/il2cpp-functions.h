@@ -175,3 +175,6 @@ DO_APP_FUNC(0x00E958F4, String *, RankingListAPIManager_get_RankingDirectory, (M
 
 // SceneEventTopBase_InitTradeList_d_67
 DO_APP_FUNC(0x009AC398, bool, SceneEventTopBase_InitTradeList_d_67_MoveNext, (SceneEventTopBase_InitTradeList_d_67 * __this, MethodInfo * method));
+
+// AllNotificationManager
+DO_APP_FUNC(0x010CF98C, void, AllNotificationManager_Initialize, (MethodInfo * method));
