@@ -211,7 +211,7 @@ replacement_SceneMyroomTop_CoroutineCharaChange_d_46_MoveNext(SceneMyroomTop_Cor
   return ret;
 }
 
-void initScreenOrientationMod(const json &config) {
+void initUIMod(const json &config) {
   if (!getBooleanConfigValue(config, "enableUIMod")) {
     return;
   }

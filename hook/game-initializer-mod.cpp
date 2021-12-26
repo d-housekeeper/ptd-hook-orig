@@ -25,7 +25,7 @@ static void replacement_SceneTitleRoot_Initialize(SceneTitleRoot *__this, Method
   __android_log_print(ANDROID_LOG_INFO, androidLogTag, "timeZoneOffsetInMillis: %d", getTimeZoneOffsetInMillis());
   __android_log_print(ANDROID_LOG_INFO, androidLogTag, "initializing optional mods");
   json config = loadConfigFromFile();
-  initScreenOrientationMod(config);
+  initUIMod(config);
   gameInitializerModLoaded = true;
 }
 

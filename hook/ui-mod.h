@@ -2,4 +2,4 @@
 
 #include "json.hpp"
 
-void initScreenOrientationMod(const nlohmann::json &config);
+void initUIMod(const nlohmann::json &config);
