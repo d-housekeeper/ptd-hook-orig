@@ -61,9 +61,6 @@ static void hideHomeSceneUIElementsIfNeeded(const json &config, SceneHomeTop *sc
       nullptr);
   GameObject_SetActive(loginBonusButtonObject, false, nullptr);
 
-  Transform *homeTopTransform = GameObject_get_transform(scene->_HomeTop->_Root, nullptr);
-  Transform_Translate_2(homeTopTransform, 0.0f, 48.0f, 0.0f, nullptr);
-
   Transform *globalHeaderTransform =
       GameObject_get_transform(scene->_GlobalMenu->_GlobalHeader_k__BackingField->_Root_k__BackingField, nullptr);
   int globalHeaderTransformChildCount = Transform_get_childCount(globalHeaderTransform, nullptr);
@@ -72,6 +69,14 @@ static void hideHomeSceneUIElementsIfNeeded(const json &config, SceneHomeTop *sc
     Transform *childTransform = Transform_GetChild(globalHeaderTransform, i, nullptr);
     GameObject *gameObject = Component_get_gameObject((Component *)childTransform, nullptr);
   }
+
+  Transform *homeTopTransform = GameObject_get_transform(scene->_HomeTop->_Root, nullptr);
+  Vector3 homeTopScale = Transform_get_lossyScale(homeTopTransform, nullptr);
+  Transform *objectRoomTransform =
+      GameObject_get_transform(scene->_HomeTop->_HomeTopContainer->_SideButton->_ObjectRoom, nullptr);
+  Vector3 objectRoomPos = Transform_get_position(objectRoomTransform, nullptr);
+  float homeTopOffsetY = (-11.037037f - objectRoomPos.y) * (0.092593f / homeTopScale.x);
+  Transform_Translate_2(homeTopTransform, 0.0f, 48.0f + homeTopOffsetY, 0.0f, nullptr);
 
   Transform *topButtonsTransform =
       Transform_Find(homeTopTransform, (String *)il2cpp_string_new("top_buttons"), nullptr);

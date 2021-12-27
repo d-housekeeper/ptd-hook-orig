@@ -137,6 +137,7 @@ DO_APP_FUNC(0x023812AC, int32_t, Transform_get_childCount, (Transform * __this, 
 DO_APP_FUNC(0x02381904, Transform *, Transform_GetChild, (Transform * __this, int32_t index, MethodInfo * method));
 DO_APP_FUNC(0x02381628, Transform *, Transform_Find, (Transform * __this, String * n, MethodInfo * method));
 DO_APP_FUNC(0x02380590, void, Transform_Translate_2, (Transform * __this, float x, float y, float z, MethodInfo * method));
+DO_APP_FUNC(0x023816E8, Vector3, Transform_get_lossyScale, (Transform * __this, MethodInfo * method));
 
 // GameObject
 DO_APP_FUNC(0x01E79934, void, GameObject_SetActive, (GameObject * __this, bool value, MethodInfo * method));
