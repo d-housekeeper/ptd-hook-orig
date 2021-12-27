@@ -19,7 +19,7 @@ static json defaultConfig = {
     {"hideHomeSceneUIElements", false},
     {"hideMyRoomSceneUIElements", false},
     {"adjustPortraitModeCameraPos", false},
-    {"cameraYPosOffset", 33},
+    {"cameraPosOffsetY", 33},
 };
 
 static void logUsingDefaultConfigMessage() {
