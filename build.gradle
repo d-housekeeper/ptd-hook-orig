@@ -16,28 +16,38 @@ plugins {
     id 'com.diffplug.spotless' version '6.0.4'
 }
 
-def gradleConfig = {
-    target '*.gradle'
-    greclipse().configFile("$rootDir/greclipse.properties")
+Properties properties = new Properties()
+String enableSpotlessProperty = null
+if (rootProject.file('local.properties').exists()) {
+    properties.load(rootProject.file('local.properties').newDataInputStream())
+    enableSpotlessProperty = properties.getProperty('spotless.enable')
 }
 
-subprojects {
-    apply plugin: 'com.diffplug.spotless'
-    spotless {
-        groovyGradle gradleConfig
-        java {
-            target 'src/*/java/**/*.java'
-            importOrder()
-            removeUnusedImports()
-            prettier(['prettier': '2.5.1', 'prettier-plugin-java': '1.6.0']).config([
-                'parser': 'java',
-                'tabWidth': 4,
-                'printWidth': 120,
-            ])
+// spotless tasks are optional, and created only when spotless.enable is set to true in local.properties file.
+// See local.dist.properties for example config.
+if (enableSpotlessProperty != null && enableSpotlessProperty.toBoolean()) {
+    def gradleConfig = {
+        target '*.gradle'
+        greclipse().configFile("$rootDir/greclipse.properties")
+    }
+
+    subprojects {
+        apply plugin: 'com.diffplug.spotless'
+        spotless {
+            groovyGradle gradleConfig
+            java {
+                target 'src/*/java/**/*.java'
+                importOrder()
+                removeUnusedImports()
+                prettier(['prettier': '2.5.1', 'prettier-plugin-java': '1.6.0']).config([
+                    'parser': 'java',
+                    'tabWidth': 4,
+                    'printWidth': 120,
+                ])
+            }
         }
     }
-}
-
-spotless {
-    groovyGradle gradleConfig
+    spotless {
+        groovyGradle gradleConfig
+    }
 }
