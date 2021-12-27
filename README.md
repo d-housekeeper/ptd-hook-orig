@@ -25,7 +25,7 @@ The mod also adds additional features that didn't exist even in original version
 * Setting a different time than current time. Useful for listening to interaction voices that are only available for limited time.
   * Many of past event stories and quests don't work correctly. Might still be useful for viewing illusts of past events. If you just want to read stories of past events, try finding one in story reminiscence (ストーリー回想).
   * By default current time and time zone of the device is used.
-* Forcing portrait mode in home scene, my room scene (女子寮), and photo mode scene (撮影モード). Useful for seeing costume design for lower part of body without switching to view mode.
+* Forcing portrait mode in home scene, my room scene (女子寮), and photo mode scene (撮影モード). Useful for seeing costume design for lower part of body or for zooming characters' face without switching to view mode.
   * Some of UI elements can be hidden for those scenes as well.
 
 ## PTDHook Settings activity
@@ -46,6 +46,7 @@ Alternatively you can add shortcut to home screen from this activity, to easily 
 * Prevents movies from being downloaded. Movies will get deleted after playing, so it won't exist on your disk even if you downloaded all assets before service shutdown.
 * Modifies Shinjuku Naraku event data to prevent it from expiring. (Expired Shinjuku Naraku event causes the app to crash)
 * Skips initialization of some event details to avoid crashes after changing to event details scene.
+* If enabled, changes camera position and/or hides some of UI elements when some of scenes are initialized. Config file is loaded every time when those scenes are initialized until you disable loading of UI mod and restart the app.
 * Creates modded apk to install those modified/added files. Re-installing the apk with different signing key also prevents updates from showing up on Google Play.
 
 ## Prerequisites
