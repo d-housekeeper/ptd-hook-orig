@@ -25,7 +25,9 @@ static void forcePortraitMode() {
 static void adjustPortraitModeCameraPos(const json &config) {
   __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Adjusting camera pos for forced portrait mode");
   float baseCameraPosY = 133.0f;
-  int cameraPosOffsetY = getIntConfigValue(config, "cameraPosOffsetY", 0);
+  float baseCameraPosZ = 510.0f;
+  int cameraPosOffsetY = getIntConfigValue(config, "cameraPosOffsetY");
+  int cameraPosOffsetZ = std::clamp(getIntConfigValue(config, "cameraPosOffsetZ"), 0, 400);
 
   OutGameCameraManager *cameraManager =
       SystemBase_1_OutGameCameraManager__get_Instance(*SystemBase_1_OutGameCameraManager__get_Instance__MethodInfo);
@@ -34,9 +36,12 @@ static void adjustPortraitModeCameraPos(const json &config) {
   Transform *cameraTransform = Component_get_transform((Component *)camera, nullptr);
   Vector3 cameraPos = Transform_get_position(cameraTransform, nullptr);
   float fieldOfView = Camera_get_fieldOfView(camera, nullptr);
-  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "old cameraPos Y: %f", cameraPos.y);
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "old cameraPos: %f, %f, %f", cameraPos.x, cameraPos.y,
+                      cameraPos.z);
   cameraPos.y = baseCameraPosY - (float)cameraPosOffsetY;
-  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "new cameraPos Y: %f", cameraPos.y);
+  cameraPos.z = baseCameraPosZ - (float)cameraPosOffsetZ;
+  __android_log_print(ANDROID_LOG_INFO, androidLogTag, "new cameraPos: %f, %f, %f", cameraPos.x, cameraPos.y,
+                      cameraPos.z);
 
   OutGameCameraManager_SetTargetPosition(cameraManager, cameraPos, fieldOfView, true, nullptr);
   OutGameCameraManager_set_ImmediatelyMove(cameraManager, true, nullptr);

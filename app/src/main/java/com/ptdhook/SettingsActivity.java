@@ -53,6 +53,7 @@ public class SettingsActivity extends Activity {
         "fixedYear",
     };
     private static final int DEFAULT_CAMERA_POS_OFFSET_Y = 33;
+    private static final int DEFAULT_CAMERA_POS_OFFSET_Z = 0;
 
     private int mNextViewID;
     private LinearLayout mRootLayout;
@@ -68,6 +69,7 @@ public class SettingsActivity extends Activity {
     private ToggleButton mHideMyRoomSceneUIElementsToggle;
     private ToggleButton mAdjustPortraitModeCameraPosToggle;
     private EditText mCameraPosOffsetYEditText;
+    private EditText mCameraPosOffsetZEditText;
     private Resources.Theme mTheme;
     private String mOldFakeTimeType;
 
@@ -127,9 +129,11 @@ public class SettingsActivity extends Activity {
         mHideHomeSceneUIElementsToggle = addToggleButtonToLayout("Hide home scene UI elements");
         mHideMyRoomSceneUIElementsToggle = addToggleButtonToLayout("Hide my room scene UI elements");
         mAdjustPortraitModeCameraPosToggle = addToggleButtonToLayout("Adjust camera position in forced portrait mode");
-        mAdjustPortraitModeCameraPosToggle.setOnClickListener(l -> updateCameraYPosEditTextEnabled());
+        mAdjustPortraitModeCameraPosToggle.setOnClickListener(l -> updateCameraPosEditTextsEnabled());
         addTextViewToLayout("camera position offset Y", true);
         mCameraPosOffsetYEditText = addIntegerEditTextToLayout(DEFAULT_CAMERA_POS_OFFSET_Y);
+        addTextViewToLayout("camera position offset Z", true);
+        mCameraPosOffsetZEditText = addIntegerEditTextToLayout(DEFAULT_CAMERA_POS_OFFSET_Z);
 
         addButtonToLayout("Save", l -> saveConfig());
         loadConfig();
@@ -171,12 +175,13 @@ public class SettingsActivity extends Activity {
         mHideHomeSceneUIElementsToggle.setEnabled(enabled);
         mHideMyRoomSceneUIElementsToggle.setEnabled(enabled);
         mAdjustPortraitModeCameraPosToggle.setEnabled(enabled);
-        updateCameraYPosEditTextEnabled();
+        updateCameraPosEditTextsEnabled();
     }
 
-    private void updateCameraYPosEditTextEnabled() {
+    private void updateCameraPosEditTextsEnabled() {
         boolean enabled = mEnableUIModToggle.isChecked() && mAdjustPortraitModeCameraPosToggle.isChecked();
         mCameraPosOffsetYEditText.setEnabled(enabled);
+        mCameraPosOffsetZEditText.setEnabled(enabled);
     }
 
     private String getConfigFilePath() {
@@ -267,6 +272,7 @@ public class SettingsActivity extends Activity {
             Object hideMyRoomSceneUIElements = obj.get("hideMyRoomSceneUIElements");
             Object adjustPortraitModeCameraPos = obj.get("adjustPortraitModeCameraPos");
             Object cameraPosOffsetY = obj.get("cameraPosOffsetY");
+            Object cameraPosOffsetZ = obj.get("cameraPosOffsetZ");
 
             updateToggleButtonChecked(mEnableUIModToggle, enableUIMod);
             updateToggleButtonChecked(mPortraitHomeSceneToggle, portraitHomeScene);
@@ -277,6 +283,9 @@ public class SettingsActivity extends Activity {
             updateToggleButtonChecked(mAdjustPortraitModeCameraPosToggle, adjustPortraitModeCameraPos);
             mCameraPosOffsetYEditText.setText(
                 (cameraPosOffsetY instanceof Integer) ? "" + cameraPosOffsetY : "" + DEFAULT_CAMERA_POS_OFFSET_Y
+            );
+            mCameraPosOffsetZEditText.setText(
+                (cameraPosOffsetY instanceof Integer) ? "" + cameraPosOffsetZ : "" + DEFAULT_CAMERA_POS_OFFSET_Z
             );
         } catch (FileNotFoundException ignored) {} catch (JSONException | IOException e) {
             Toast.makeText(this, "Failed to load config from file: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -332,30 +341,37 @@ public class SettingsActivity extends Activity {
     }
 
     @SuppressLint("SetTextI18n")
-    private Integer validateAndNormalizeCameraYPos() {
-        int cameraYPos;
+    private Integer validateAndNormalizeIntegerEditTextField(EditText editText, int defaultValue) {
+        int value;
         try {
-            mCameraPosOffsetYEditText.clearFocus();
-            cameraYPos = Integer.parseInt(mCameraPosOffsetYEditText.getText().toString());
-            mCameraPosOffsetYEditText.setTextKeepState("" + cameraYPos);
+            editText.clearFocus();
+            value = Integer.parseInt(editText.getText().toString());
+            editText.setTextKeepState("" + value);
         } catch (NumberFormatException e) {
-            if (!mCameraPosOffsetYEditText.isEnabled()) {
-                mCameraPosOffsetYEditText.setTextKeepState("" + DEFAULT_CAMERA_POS_OFFSET_Y);
-                return DEFAULT_CAMERA_POS_OFFSET_Y;
+            if (!editText.isEnabled()) {
+                editText.setTextKeepState("" + defaultValue);
+                return defaultValue;
             }
 
-            mCameraPosOffsetYEditText.setError("The value must be an integer");
-            mCameraPosOffsetYEditText.requestFocus();
+            editText.setError("The value must be an integer");
+            editText.requestFocus();
             return null;
         }
 
-        return cameraYPos;
+        return value;
     }
 
     private void saveConfig() {
         boolean fakeTimeValueValid = validateAndNormalizeFakeTimeValue();
-        Integer cameraPosY = validateAndNormalizeCameraYPos();
-        if (!fakeTimeValueValid || cameraPosY == null) {
+        Integer cameraPosY = validateAndNormalizeIntegerEditTextField(
+            mCameraPosOffsetYEditText,
+            DEFAULT_CAMERA_POS_OFFSET_Y
+        );
+        Integer cameraPosZ = validateAndNormalizeIntegerEditTextField(
+            mCameraPosOffsetZEditText,
+            DEFAULT_CAMERA_POS_OFFSET_Z
+        );
+        if (!fakeTimeValueValid || cameraPosY == null || cameraPosZ == null) {
             return;
         }
 
@@ -375,6 +391,7 @@ public class SettingsActivity extends Activity {
             obj.put("hideMyRoomSceneUIElements", mHideMyRoomSceneUIElementsToggle.isChecked());
             obj.put("adjustPortraitModeCameraPos", mAdjustPortraitModeCameraPosToggle.isChecked());
             obj.put("cameraPosOffsetY", cameraPosY.intValue());
+            obj.put("cameraPosOffsetZ", cameraPosZ.intValue());
 
             String filePath = getConfigFilePath();
             File file = new File(filePath);
@@ -541,7 +558,7 @@ public class SettingsActivity extends Activity {
         EditText editText = new EditText(this);
         editText.setText("" + value);
         editText.setTextSize(TEXT_SIZE);
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT

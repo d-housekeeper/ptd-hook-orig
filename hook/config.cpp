@@ -20,6 +20,7 @@ static json defaultConfig = {
     {"hideMyRoomSceneUIElements", false},
     {"adjustPortraitModeCameraPos", false},
     {"cameraPosOffsetY", 33},
+    {"cameraPosOffsetZ", 0},
 };
 
 static void logUsingDefaultConfigMessage() {
@@ -66,8 +67,8 @@ bool getBooleanConfigValue(const nlohmann::json &config, const char *configKey) 
   return value;
 }
 
-int getIntConfigValue(const nlohmann::json &config, const char *configKey, int defaultValue) {
-  int value = defaultValue;
+int getIntConfigValue(const nlohmann::json &config, const char *configKey) {
+  int value = 0;
   try {
     value = config[configKey];
   } catch (json::exception &e) {
