@@ -24,8 +24,8 @@ std::string getStartLessonResponse(ResponseLoaderContext *context, const nlohman
   }
 
   json config = loadConfigFromFile();
-  sec_time_point now = getModifiedCurrentTime(config);
-  sec_time_point endTime = now + chrono::seconds{60};
+  date::sys_seconds now = getModifiedCurrentTime(config);
+  date::sys_seconds endTime = now + chrono::seconds{60};
   json responseJson = getBaseResponse();
   // clang-format off
   responseJson.merge_patch({

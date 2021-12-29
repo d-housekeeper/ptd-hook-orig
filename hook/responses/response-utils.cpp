@@ -17,7 +17,7 @@ void logInvalidValueError(const std::string &fakeTimeValue, const std::string &f
   __android_log_print(ANDROID_LOG_WARN, androidLogTag, "Using current time");
 }
 
-sec_time_point getModifiedCurrentTime(const json &config) {
+date::sys_seconds getModifiedCurrentTime(const json &config) {
   std::string fakeTimeType;
   std::string fakeTimeValue;
   try {
@@ -30,8 +30,8 @@ sec_time_point getModifiedCurrentTime(const json &config) {
 
   std::istringstream is(fakeTimeValue);
   is.exceptions(std::istringstream::failbit | std::istringstream::badbit);
-  sec_time_point now = getCurrentTime();
-  sec_time_point origNow = now;
+  date::sys_seconds now = getCurrentTime();
+  date::sys_seconds origNow = now;
   try {
     if (fakeTimeType == "fixedDateAndTime") {
       is >> date::parse(strDateTimeFormat, now);
@@ -72,7 +72,7 @@ sec_time_point getModifiedCurrentTime(const json &config) {
 
 nlohmann::ordered_json getBaseResponse() {
   json config = loadConfigFromFile();
-  sec_time_point now = getModifiedCurrentTime(config);
+  date::sys_seconds now = getModifiedCurrentTime(config);
   std::string formattedDateTime = date::format(strDateTimeFormat, now);
   __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Current time: %s", formattedDateTime.c_str());
 

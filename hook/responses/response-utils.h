@@ -4,7 +4,7 @@
 #include "time-utils.h"
 #include <chrono>
 
-sec_time_point getModifiedCurrentTime(const nlohmann::json &config);
+date::sys_seconds getModifiedCurrentTime(const nlohmann::json &config);
 
 nlohmann::ordered_json getBaseResponse();
 
