@@ -46,11 +46,10 @@ date::sys_seconds getModifiedCurrentTime(const json &config) {
       int inYear = std::stoi(fakeTimeValue);
 
       date::year_month_day today{floor<date::days>(now)};
-      date::years yearDiff = date::years{date::year{inYear} - today.year()};
+      date::year_month_day lastYearDay{today.year() - date::years{1}, today.month(), today.day()};
       date::sys_days datePart = date::floor<date::days>(now);
       chrono::duration timePart = now - datePart;
-      date::sys_days lastYearDay = floor<chrono::days>(datePart + yearDiff);
-      now = floor<chrono::seconds>(lastYearDay + timePart);
+      now = floor<chrono::seconds>(date::sys_days{lastYearDay} + timePart);
     }
   } catch (std::istringstream::failure &e) {
     logInvalidValueError(fakeTimeValue, fakeTimeType, e);
