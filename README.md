@@ -57,7 +57,7 @@ Alternatively you can add shortcut to home screen from this activity, to easily 
   * The apk must be the latest version before service shutdown (5.1.10). Any version newer or older will not work.
   * You need to have a copy of `md` directory on development machine to generate login response.
   * Keystore file for re-signing modded apk. Create new one with `keytool` if you don't already have one.
-  * If you have previously signed into the game, and don't want to update last played date on Google Play Games each time you launch the game, revoke app permission on Google account security settings.
+  * If you have previously signed into the game, revoke app permission on Google account security settings, just in case.
 
 Build environment setup is automated with nix package manager.
 You need a linux machine (either real machine or virtual machine) with nix installed: https://nixos.org/download.html
