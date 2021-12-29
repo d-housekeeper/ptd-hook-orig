@@ -49,7 +49,8 @@ sec_time_point getModifiedCurrentTime(const json &config) {
       date::years yearDiff = date::years{date::year{inYear} - today.year()};
       date::sys_days datePart = date::floor<date::days>(now);
       chrono::duration timePart = now - datePart;
-      now = floor<chrono::seconds>(date::sys_days{today} + yearDiff + timePart);
+      date::sys_days lastYearDay = floor<chrono::days>(datePart + yearDiff);
+      now = floor<chrono::seconds>(lastYearDay + timePart);
     }
   } catch (std::istringstream::failure &e) {
     logInvalidValueError(fakeTimeValue, fakeTimeType, e);
