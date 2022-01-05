@@ -70,12 +70,6 @@ Before running build scripts, get PTD's apk from your backup, and rename it to `
 nix-shell
 ```
 
-On non-linux machines with Docker Desktop installed, you could also run nix-shell inside docker container. Technically this also runs on linux machine, but all files created by scripts owned by root. I recommend installing nix directly instead on linux machine.
-
-```
-docker run --rm -it -v ptd-hook-nix:/nix -v $PWD:/work -w /work nixos/nix nix-shell
-```
-
 adb command will not be installed automatically. To run scripts that need adb to work, run them on host machine.
 (There are ways to run adb from virtual machine, though I do not go into detail here)
 
