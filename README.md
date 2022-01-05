@@ -62,6 +62,8 @@ Alternatively you can add shortcut to home screen from this activity, to easily 
 Build environment setup is automated with nix package manager.
 You need a linux machine (either real machine or virtual machine) with nix installed: https://nixos.org/download.html
 
+If you are running this on NixOS, you also need to install nix-ld to run aapt2 from gradle build: https://github.com/Mic92/nix-ld
+
 Before running build scripts, get PTD's apk from your backup, and rename it to `PTD.apk`, and place it in the root directory of this repo. Then start a subshell with `nix-shell`.
 
 ```
