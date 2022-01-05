@@ -23,6 +23,10 @@ static void forcePortraitMode() {
 }
 
 static void adjustPortraitModeCameraPos(const json &config) {
+  if (!getBooleanConfigValue(config, "adjustPortraitModeCameraPos")) {
+    return;
+  }
+
   __android_log_print(ANDROID_LOG_INFO, androidLogTag, "Adjusting camera pos for forced portrait mode");
   float baseCameraPosY = 133.0f;
   float baseCameraPosZ = 510.0f;
